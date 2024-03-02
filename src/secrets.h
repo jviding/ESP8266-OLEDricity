@@ -1,3 +1,4 @@
 #pragma once
 
-#define WIFI_PWD    "[SET PWD]"
+#define SECRETS_WIFI_SSID   "[SET SSID]"
+#define SECRETS_WIFI_PWD    "[SET PWD]"
