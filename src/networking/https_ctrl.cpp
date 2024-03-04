@@ -27,13 +27,13 @@ int Networking::https_read_to_buffer(Stream& response, char* buff, size_t buff_s
 // Failure: Allocated buffers are freed, and returns -1
 int Networking::https_read_response(Stream& response, char** buffs, size_t buffs_num, size_t buff_size) {
   Serial.println("Reading API response raw to buffers...");
-  for (int i = 0; i < buffs_num; i++) {
+  for (int i = 0; i < (int)buffs_num; i++) {
     // Allocate new buffer
     buffs[i] = new char[buff_size];
     // Receive streamed response to buffer
     int bytes_read = https_read_to_buffer(response, buffs[i], buff_size);
     // If buffer is not full, it means end of response
-    if (bytes_read < buff_size) {
+    if (bytes_read < (int)buff_size) {
       buffs[i][bytes_read] = '\0';  // Add termination char to mark end of buffered stream
       Serial.print("Allocated ");
       Serial.print(i + 1);
@@ -43,7 +43,7 @@ int Networking::https_read_response(Stream& response, char** buffs, size_t buffs
   }
   // Overflow, free all memory and return -1 to signal error
   Serial.println("Buffer overflow, API response was too large.");
-  for (int i = 0; i < buffs_num; i++) {
+  for (int i = 0; i < (int)buffs_num; i++) {
     delete[] buffs[i];
   }
   return -1;
