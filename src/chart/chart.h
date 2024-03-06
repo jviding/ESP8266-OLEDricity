@@ -2,8 +2,8 @@
 
 #include "U8g2lib.h"
 #include <Wire.h>
-#include "../networking/networking.h"
 #include "time.h"
+#include "../networking/networking.h"
 
 #define X_MAX   127
 #define Y_MAX   63
