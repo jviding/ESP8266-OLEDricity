@@ -16,6 +16,7 @@ void Networking::allocate_buffers() {
 void Networking::enable() {
   Serial.println("Enabling Networking...");
   https_enable();
+  ntp_enable();
   allocate_buffers();
   Serial.println("Networking enabled.");
   delay(100);
@@ -55,3 +56,7 @@ bool Networking::update_data() {
   wifi_disconnect();
   return true;
 };
+
+uint32_t Networking::get_time() {
+  return ntp_get_epoch_time();
+}

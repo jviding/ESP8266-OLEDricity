@@ -3,12 +3,17 @@
 #include <ESP8266WiFi.h>
 #include <BearSSLHelpers.h>
 #include <ESP8266HTTPClient.h>
+#include <WiFiUdp.h>
 
 #include "../secrets.h"
 #define WIFI_SSID  SECRETS_WIFI_SSID
 #define WIFI_PWD   SECRETS_WIFI_PWD
 
-#define API_URL  "https://api.porssisahko.net/v1/latest-prices.json"
+#define API_URL   "https://api.porssisahko.net/v1/latest-prices.json"
+
+#define NTP_SRC     "pool.ntp.org"
+#define NTP_ZONE    3
+#define NTP_TIMEOUT 10
 
 #define BUFFERS_RAW_MAX_NUM   10
 #define BUFFER_RAW_MAX_SIZE   512
@@ -50,6 +55,7 @@ public:
   // Functions
   static void enable();
   static bool update_data();
+  static uint32_t get_time();
 
 private:
   // Variables
@@ -104,6 +110,17 @@ private:
   static int https_read_response(Stream& response, char** buffs, size_t buffs_num, size_t buff_size);
   static int https_call_API(char** buffs, size_t buffs_num, size_t buff_size);
   static void https_enable();
+
+  /*
+  * NTP
+  * - Get time from external source
+  */
+  // Variables
+  static WiFiUDP udp;
+  // Functions - NTP
+  static uint32_t ntp_get_epoch_time();
+  static bool ntp_wait_response();
+  static void ntp_enable();
 
   /*
   * WIFI

@@ -2,7 +2,6 @@
 #include "networking/networking.h"
 #include "chart/chart.h"
 
-
 // Show error codes on display?
 // F.ex. create class Error, to store/read
 // Would help debugging exceptions
@@ -50,13 +49,9 @@ void loop() {
   Serial.print("Free heap: ");
   Serial.println(free);
 
-  //OLED::displayText();
-
-
   // Then disconnect for 12h or so
   // If this fails, retry and x2 the wait if fails
   // Show error on screen?
-
 
   delay(1000);
 };
