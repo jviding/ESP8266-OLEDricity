@@ -98,4 +98,32 @@ void Chart::draw() {
   draw_xy_mid();
   draw_pillars();
   display.sendBuffer();
+
+  const int time_zone = 2;
+  setenv("TZ", "EET-2EEST,M3.5.0/3,M10.5.0/4", 1);
+  tzset();
+
+  Serial.println("Print time");
+
+  time_t now = Networking::get_time();
+  if (now) {
+    struct tm *localTime = localtime(&now);
+
+    Serial.print("Year: ");
+    Serial.println(localTime->tm_year + 1900); // Year since 1900
+    Serial.print("Month: ");
+    Serial.println(localTime->tm_mon + 1);    // Month (0-11, so add 1)
+    Serial.print("Day: ");
+    Serial.println(localTime->tm_mday);       // Day of the month (1-31)
+    Serial.print("Hour: ");
+    Serial.println(localTime->tm_hour);       // Hour (0-23)
+    Serial.print("Minute: ");
+    Serial.println(localTime->tm_min);        // Minute (0-59)
+    Serial.print("Second: ");
+    Serial.println(localTime->tm_sec);        // Second (0-59)
+
+  }
+
+  Serial.println("Print time done");
+
 };
