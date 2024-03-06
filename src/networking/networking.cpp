@@ -58,5 +58,6 @@ bool Networking::update_data() {
 };
 
 uint32_t Networking::get_time() {
+  wifi_ensure_is_connected();
   return ntp_get_epoch_time();
 }

@@ -5,16 +5,14 @@
 #include <ESP8266HTTPClient.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
+#include <Timezone.h>
 
 #include "../secrets.h"
 #define WIFI_SSID  SECRETS_WIFI_SSID
 #define WIFI_PWD   SECRETS_WIFI_PWD
 
 #define API_URL   "https://api.porssisahko.net/v1/latest-prices.json"
-
-#define NTP_SRC     "pool.ntp.org"
-#define NTP_ZONE    3
-#define NTP_TIMEOUT 10
+#define NTP_SRC   "pool.ntp.org"
 
 #define BUFFERS_RAW_MAX_NUM   10
 #define BUFFER_RAW_MAX_SIZE   512
@@ -120,7 +118,7 @@ private:
   static WiFiUDP udp;
   static NTPClient ntpClient;
   // Functions - NTP
-  static uint32_t ntp_get_epoch_time();
+  static time_t ntp_get_epoch_time();
   static void ntp_enable();
 
   /*
