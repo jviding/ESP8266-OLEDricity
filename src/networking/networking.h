@@ -3,6 +3,7 @@
 #include <ESP8266WiFi.h>
 #include <BearSSLHelpers.h>
 #include <ESP8266HTTPClient.h>
+#include <NTPClient.h>
 #include <WiFiUdp.h>
 
 #include "../secrets.h"
@@ -117,9 +118,9 @@ private:
   */
   // Variables
   static WiFiUDP udp;
+  static NTPClient ntpClient;
   // Functions - NTP
   static uint32_t ntp_get_epoch_time();
-  static bool ntp_wait_response();
   static void ntp_enable();
 
   /*
