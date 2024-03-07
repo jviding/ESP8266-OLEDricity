@@ -53,6 +53,7 @@ public:
 
   // Functions
   static void enable();
+  static void disable();
   static bool update_data();
   static uint32_t get_time();
 

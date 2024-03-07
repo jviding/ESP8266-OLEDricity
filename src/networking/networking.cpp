@@ -22,6 +22,10 @@ void Networking::enable() {
   delay(100);
 };
 
+void Networking::disable() {
+  wifi_disconnect();
+}
+
 void Networking::ensure_data_freed() {
   if (has_data) {
     for (size_t i = 0; i < PRICES_MAX_NUM; i++) {
@@ -52,8 +56,6 @@ bool Networking::update_data() {
   // Parse the 'price_data_raw' to 'price_data'
   format_price_data(price_data, price_data_raw, PRICES_MAX_NUM);
   has_data = true;
-  // Disconnect WiFi
-  wifi_disconnect();
   return true;
 };
 
