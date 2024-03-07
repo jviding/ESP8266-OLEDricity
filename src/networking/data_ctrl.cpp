@@ -167,9 +167,9 @@ bool Networking::data_parse(price_data_raw_t** parsed, size_t parsed_num, char**
   if (res_ok) {
     parsed[i - 1]->eof = true;
   }
-  Serial.println("Parsed.");
+  Serial.print("Parsed.");
   // Ensure all raw buffers were freed
   data_ensure_buffers_were_freed(buffs_raw, buffs_raw_num, buffs_raw_size);
-  Serial.println("Raw buffers were freed.");
+  Serial.println("Freed raw buffers.");
   return res_ok;
 };

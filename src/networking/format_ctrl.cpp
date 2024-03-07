@@ -95,6 +95,6 @@ void Networking::format_price_data(price_data_t** parsed, price_data_raw_t** raw
   parsed[num_items - 1]->eof = 1;
   Serial.print("Formatted.");
   format_sort_oldest_to_latest(price_data, PRICES_MAX_NUM);
-  Serial.println("Sorted.");
-  Serial.println("Parsing buffers were freed.");
+  Serial.print("Sorted.");
+  Serial.println("Buffers freed.");
 };
