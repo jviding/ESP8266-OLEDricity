@@ -126,6 +126,7 @@ void Chart::draw_pillar(size_t index, int price, int x) {
 
 void Chart::draw_pillars() {
   int x = 14;
+  int count = 0;
   for (size_t i = data_from; i < data_to; i++) {
     int price = data[i]->cents_x100;
     if (price > max_price) {
@@ -134,11 +135,12 @@ void Chart::draw_pillars() {
     }
     draw_pillar(i, price, x);
     // Draw label
-    if (i % 3 == 0) {
+    if ((count % 3) == 1) {
       draw_x_label(data[i]->hour, x - 3);
     }
-    // Move X cursor
+    // Move X cursor and Counter
     x += 6;
+    count++;
   }
 };
 
