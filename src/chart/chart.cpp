@@ -15,8 +15,6 @@ void Chart::init() {
 };
 
 void Chart::set_time_and_data_ptrs() {
-  time_now = Networking::get_time();
-  data = Networking::price_data;
   for (size_t i = 0; i < PRICES_MAX_NUM; i++) {
     bool now = true;
     now &= data[i]->year  == year(time_now);
@@ -71,7 +69,7 @@ void Chart::draw_y_axis_mid() {
   int height = get_pillar_height(max_price / 2);
   int y = Y_PLOT_MAX - height;
   // Draw axis horizontal
-  display.drawLine(10, y, X_MAX, y);
+  display.drawLine(10, y, X_CHART_MAX, y);
   // Draw mid label
   char* mid_label = get_int_as_label((max_price / 2) / 100);
   y += 2;
@@ -89,14 +87,14 @@ void Chart::draw_axis() {
   // Draw Y axis
   display.drawLine(10, 0, 10, Y_PLOT_MAX);
   // Draw X axis
-  display.drawLine(10, Y_PLOT_MAX, X_MAX, Y_PLOT_MAX);
+  display.drawLine(10, Y_PLOT_MAX, X_CHART_MAX, Y_PLOT_MAX);
   // Mid
   draw_y_axis_mid();
 };
 
 void Chart::draw_x_label(int hour, int x) {
   char* label = get_int_as_label(hour);
-  display.drawStr(x, Y_MAX, label);
+  display.drawStr(x, Y_CHART_MAX, label);
   delete[] label;
 };
 
@@ -149,7 +147,11 @@ void Chart::draw_init() {
   set_max_price();
 };
 
-void Chart::draw() {
+void Chart::draw(price_data_t** price_data, uint32_t current_time) {
+  // Set data and time
+  data = price_data;
+  time_now = current_time;
+  // Draw
   Serial.println("Initializing chart.");
   draw_init();
   Serial.print("Drawing...");

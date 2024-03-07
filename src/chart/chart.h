@@ -5,24 +5,18 @@
 #include "time.h"
 #include "../networking/networking.h"
 
-#define X_MAX   127
-#define Y_MAX   63
-#define Y_PLOT_MAX  (Y_MAX - 8)
+#define X_CHART_MAX  127
+#define Y_CHART_MAX  63
+#define Y_PLOT_MAX   (Y_CHART_MAX - 8)
 
 #define PILLARS_NUM 19
 
-  /* 
-  * IDEAS
-  * - Show price Now and Day Average?
-  * - Follow actual price with mid line?
-  */
 
 class Chart {
 public:
   // Functions
   static void init();
-  static void draw();
-
+  static void draw(price_data_t** price_data, uint32_t current_time);
 
 private:
   // Variables
