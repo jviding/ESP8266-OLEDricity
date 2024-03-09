@@ -40,5 +40,4 @@ private:
   static void draw_solid_pillar(int price, int x);
   static void draw_pillar(size_t index, int price, int x);
   static void draw_pillars();
-  static void draw_init();
 };

@@ -11,7 +11,8 @@ size_t Chart::data_from;
 size_t Chart::data_to;
 
 void Chart::init() {
-  display.begin();  
+  display.begin();
+  display.setFont(u8g2_font_5x7_tf);
 };
 
 void Chart::set_time_and_data_ptrs() {
@@ -142,21 +143,17 @@ void Chart::draw_pillars() {
   }
 };
 
-void Chart::draw_init() {
-  set_time_and_data_ptrs();
-  set_max_price();
-};
-
 void Chart::draw(price_data_t** price_data, uint32_t current_time) {
-  // Set data and time
+  Serial.println("Initializing chart.");
+  // Set variables
   data = price_data;
   time_now = current_time;
+  // Calculate values
+  set_time_and_data_ptrs();
+  set_max_price();
   // Draw
-  Serial.println("Initializing chart.");
-  draw_init();
   Serial.print("Drawing...");
   display.clearBuffer();
-  display.setFont(u8g2_font_5x7_tf);
   draw_axis();
   draw_pillars();
   display.sendBuffer();
