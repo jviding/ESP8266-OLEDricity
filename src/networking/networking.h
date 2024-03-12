@@ -106,8 +106,8 @@ private:
   static HTTPClient https;
   static BearSSL::WiFiClientSecure client;
   // Functions - HTTPS
-  static int https_read_to_buffer(Stream& response, char* buff, size_t buff_size);
-  static int https_read_response(Stream& response, char** buffs, size_t buffs_num, size_t buff_size);
+  static int https_read_to_buffer(Stream* response, char* buff, size_t buff_size);
+  static int https_read_response(Stream* response, char** buffs, size_t buffs_num, size_t buff_size);
   static int https_call_API(char** buffs, size_t buffs_num, size_t buff_size);
   static void https_enable();
 

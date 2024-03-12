@@ -10,24 +10,24 @@ void Networking::https_enable() {
 };
 
 // Returns the number of bytes read to buffer
-int Networking::https_read_to_buffer(Stream& response, char* buff, size_t buff_size) {
+int Networking::https_read_to_buffer(Stream* response, char* buff, size_t buff_size) {
   /*
   * Data is read in as chunks, where chunk size is 1/2 of buffer size.
   * If the buffer size is changed, this code might need to be changed.
   * Otherwise, the ESP8266 may have issues with performance and memory.
   */
   // Read in 2x chunks, where chunk is 1/2 of buffer size
-  size_t half_1 = response.readBytes(&buff[0], buff_size/2);
-  size_t half_2 = response.readBytes(&buff[buff_size/2], buff_size/2);
+  size_t half_1 = response->readBytes(&buff[0], buff_size/2);
+  size_t half_2 = response->readBytes(&buff[buff_size/2], buff_size/2);
   // Return total bytes received
   return half_1 + half_2;
 };
 
 // Success: Returns the number of allocated buffers
 // Failure: Allocated buffers are freed, and returns -1
-int Networking::https_read_response(Stream& response, char** buffs, size_t buffs_num, size_t buff_size) {
+int Networking::https_read_response(Stream* response, char** buffs, size_t buffs_num, size_t buff_size) {
   Serial.print("Reading response...");
-  for (int i = 0; i < (int)buffs_num; i++) {
+  for (size_t i = 0; i < buffs_num; i++) {
     // Allocate new buffer
     buffs[i] = new char[buff_size];
     // Receive streamed response to buffer
@@ -52,16 +52,20 @@ int Networking::https_read_response(Stream& response, char** buffs, size_t buffs
 // Success: Returns number of allocated buffers
 // Failure: Returns -1
 int Networking::https_call_API(char** buffs, size_t buffs_num, size_t buff_size) {
-  Serial.print("Sending HTTPS GET...");
   // Response
   int alloc_num = 0;
+  // Initialize the HTTP client
+  if (!https.begin(client, API_URL)) {
+    Serial.println("Failed initializing HTTP client.");
+    return -1;
+  }
+  Serial.print("Sending HTTPS GET...");
   // GET request to API
-  https.begin(client, API_URL);
   int httpCode = https.GET();
   // Handle response
   if (httpCode == HTTP_CODE_OK) {
-    Serial.println("Sent.");
-    alloc_num = https_read_response(https.getStream(), buffs, buffs_num, buff_size);
+    Serial.println("Sent.");    
+    alloc_num = https_read_response(https.getStreamPtr(), buffs, buffs_num, buff_size);
   } else {
     Serial.println("Failed.");
     Serial.print(httpCode > 0 ? "Unexpected response code: " : "Network error: ");
