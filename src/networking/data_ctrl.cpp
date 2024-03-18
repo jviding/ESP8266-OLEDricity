@@ -121,9 +121,6 @@ bool Networking::data_parse(price_data_raw_t** parsed, size_t parsed_num, char**
   char_ptr = 0;
   buff_ptr = 0;
   buff_empty = false;
-  // Set value limits
-  size_t price_len = PRICE_MAX_LEN;
-  size_t time_len = TIME_MAX_LEN;
   // Scroll to start of JSON array
   data_skip_until_char('[', buffs_raw, buffs_raw_num, buffs_raw_size);
   // Then read JSON by JSON
@@ -136,12 +133,12 @@ bool Networking::data_parse(price_data_raw_t** parsed, size_t parsed_num, char**
     // Read price
     char* price = nullptr;
     res_ok &= data_skip_until_char(':', buffs_raw, buffs_raw_num, buffs_raw_size);
-    res_ok &= data_read_until_char(',', &price, price_len, buffs_raw, buffs_raw_num, buffs_raw_size);
+    res_ok &= data_read_until_char(',', &price, PRICE_MAX_LEN, buffs_raw, buffs_raw_num, buffs_raw_size);
     // Read time (startDate)
     char* time = nullptr;
     res_ok &= data_skip_until_char(':', buffs_raw, buffs_raw_num, buffs_raw_size);
     res_ok &= data_skip_until_char('"', buffs_raw, buffs_raw_num, buffs_raw_size);
-    res_ok &= data_read_until_char(':', &time, time_len, buffs_raw, buffs_raw_num, buffs_raw_size);
+    res_ok &= data_read_until_char(':', &time, TIME_MAX_LEN, buffs_raw, buffs_raw_num, buffs_raw_size);
     // Check for errors
     if (!res_ok) {
       Serial.println("\nFailed parsing, something went wrong.");

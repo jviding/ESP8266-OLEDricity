@@ -11,18 +11,26 @@ int Networking::format_char_to_int(char str) {
 };
 
 void Networking::format_set_price_x100(price_data_t* price_data, char* price_str) {
-  // Price is in format 'XXX.XXX', where the number of X may vary
+  // Price is in format 'XXX' or 'XXX.XXX', where the number of X may vary
   int result = 0;
-  // Read until dot
+  // Read until dot or EOF
   while (*price_str != '.') {
+    // If EOF, no decimals, return x100
+    if (*price_str == '\0') {
+      price_data->cents_x100 = result * 100;
+      return;
+    }
+    // Read and move to next char
     result = result * 10 + format_char_to_int(*price_str);
     price_str++;
   }
-  // Read 2x more values for x100
-  price_str++;
-  result = result * 10 + format_char_to_int(*price_str);
-  price_str++;
-  result = result * 10 + format_char_to_int(*price_str);
+  // Read 2x decimals for x100
+  bool has_next_1 = *(price_str + 1) != '\0';
+  bool has_next_2 = has_next_1 && *(price_str + 2) != '\0';
+  char next_1 = has_next_1 ? *(price_str + 1) : '0';
+  char next_2 = has_next_2 ? *(price_str + 2) : '0';
+  result = result * 10 + format_char_to_int(next_1);
+  result = result * 10 + format_char_to_int(next_2);
   // Set
   price_data->cents_x100 = result;
 };
