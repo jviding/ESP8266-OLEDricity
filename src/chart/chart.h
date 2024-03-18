@@ -14,6 +14,9 @@
 
 class Chart {
 public:
+  // Variables
+  static size_t data_now;
+
   // Functions
   static void init();
   static void draw(price_data_t** price_data, uint32_t current_time);
@@ -24,12 +27,11 @@ private:
   static int max_price;
   static price_data_t** data;
   static time_t time_now;
-  static size_t data_now;
   static size_t data_from;
   static size_t data_to;
 
   // Functions
-  static void set_time_and_data_ptrs();
+  static void set_data_ptrs();
   static void set_max_price();
   static char* get_int_as_label(int val);
   static int get_pillar_height(int price);
