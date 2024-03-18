@@ -1,6 +1,5 @@
 #include "chart.h"
 
-
 U8G2_SH1106_128X64_NONAME_F_HW_I2C Chart::display(U8G2_R0, U8X8_PIN_NONE);
 
 int Chart::max_price;
@@ -11,11 +10,13 @@ size_t Chart::data_from;
 size_t Chart::data_to;
 
 void Chart::init() {
+  Serial.print("Initializing Chart display...");
   display.begin();
   display.setFont(u8g2_font_5x7_tf);
+  Serial.println("Ok.");
 };
 
-void Chart::set_time_and_data_ptrs() {
+void Chart::set_data_ptrs() {
   for (size_t i = 0; i < PRICES_MAX_NUM; i++) {
     bool now = true;
     now &= data[i]->year  == year(time_now);
@@ -38,7 +39,6 @@ void Chart::set_max_price() {
       max_price = data[i]->cents_x100;
     }
   }
-  Serial.print("Max price: "); Serial.println(max_price);
   // Add +1 to distinguish between 'max prices'
   // It will be rounded, so f.ex. x.x, x.y, x.z would all show up as x
   max_price += 100;
@@ -46,10 +46,8 @@ void Chart::set_max_price() {
   // Lower limit 05
   if (max_price > 9900) {
     max_price = 9900;
-    Serial.println("Max price exceeded limit, changed to 9900.");
   } else if (max_price < 500) {
     max_price = 500;
-    Serial.println("Max price below limit, changed to 500.");
   }
 };
 
@@ -129,11 +127,14 @@ void Chart::draw_pillars() {
   for (size_t i = data_from; i < data_to; i++) {
     int price = data[i]->cents_x100;
     if (price > max_price) {
-      // Notice the upper limit of 99 c/kWh
+      // Notice the Y-axis upper limit of 99 c/kWh
       price = max_price;
+    } else if (price < 0) {
+      // Set lower limit to 0
+      price = 0;
     }
     draw_pillar(i, price, x);
-    // Draw label
+    // Draw label, every 3 pillars starting from 2nd
     if ((count % 3) == 1) {
       draw_x_label(data[i]->hour, x - 3);
     }
@@ -144,18 +145,18 @@ void Chart::draw_pillars() {
 };
 
 void Chart::draw(price_data_t** price_data, uint32_t current_time) {
-  Serial.println("Initializing chart.");
+  Serial.print("Preparing Chart...");
   // Set variables
   data = price_data;
   time_now = current_time;
   // Calculate values
-  set_time_and_data_ptrs();
+  set_data_ptrs();
   set_max_price();
-  // Draw
   Serial.print("Drawing...");
+  // Draw
   display.clearBuffer();
   draw_axis();
   draw_pillars();
   display.sendBuffer();
-  Serial.println("Done.");
+  Serial.println("Ok.");
 };
