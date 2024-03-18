@@ -12,7 +12,6 @@ size_t Chart::data_to;
 void Chart::init() {
   Serial.print("Initializing Chart display...");
   display.begin();
-  display.setFont(u8g2_font_5x7_tf);
   Serial.println("Ok.");
 };
 
@@ -155,6 +154,7 @@ void Chart::draw(price_data_t** price_data, uint32_t current_time) {
   Serial.print("Drawing...");
   // Draw
   display.clearBuffer();
+  display.setFont(u8g2_font_5x7_tf);
   draw_axis();
   draw_pillars();
   display.sendBuffer();
