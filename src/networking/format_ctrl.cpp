@@ -13,11 +13,17 @@ int Networking::format_char_to_int(char str) {
 void Networking::format_set_price_x100(price_data_t* price_data, char* price_str) {
   // Price is in format 'XXX' or 'XXX.XXX', where the number of X may vary
   int result = 0;
+  // Check if negative
+  bool is_negative = false;
+  if (*price_str == '-') {
+    is_negative = true;
+    price_str++;
+  }
   // Read until dot or EOF
   while (*price_str != '.') {
     // If EOF, no decimals, return x100
     if (*price_str == '\0') {
-      price_data->cents_x100 = result * 100;
+      price_data->cents_x100 = result * 100 * (is_negative ? -1 : 1);
       return;
     }
     // Read and move to next char
@@ -32,7 +38,7 @@ void Networking::format_set_price_x100(price_data_t* price_data, char* price_str
   result = result * 10 + format_char_to_int(next_1);
   result = result * 10 + format_char_to_int(next_2);
   // Set
-  price_data->cents_x100 = result;
+  price_data->cents_x100 = result * (is_negative ? -1 : 1);
 };
 
 void Networking::format_set_time(price_data_t* price_data, char* time_str) {
