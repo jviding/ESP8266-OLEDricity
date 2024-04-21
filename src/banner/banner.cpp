@@ -84,12 +84,6 @@ void Banner::draw(int price_x100) {
   // Draw
   display.clearBuffer();
   display.setFont(u8g2_font_fub25_tr); // width: 35, height: 37
-
-  /*display.firstPage();
-  do {
-    
-  } while (display.nextPage());*/
-
   draw_price(price_x100);
   display.sendBuffer();
   Serial.println("Ok.");
