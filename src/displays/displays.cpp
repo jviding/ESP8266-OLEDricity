@@ -1,32 +1,56 @@
 #include "displays.h"
 
 
-void Displays::init() {
-  Serial.print("Enabling Display control pins...");
+void Displays::pin_high(int pin) {
+  digitalWrite(pin, HIGH);
+  delay(100);
+};
+
+void Displays::pin_low(int pin) {
+  digitalWrite(pin, LOW);
+  delay(100);
+};
+
+void Displays::init_ctrl_pins() {
   pinMode(PIN_BANNER, OUTPUT);
   pinMode(PIN_CHART,  OUTPUT);
-  digitalWrite(PIN_BANNER, LOW);
-  digitalWrite(PIN_CHART,  LOW);
-  delay(100);
-  Serial.println("Ok.");
+  pin_low(PIN_BANNER);
+  pin_low(PIN_CHART);
+};
+
+void Displays::init_banner() {
+  pin_high(PIN_BANNER);
+  Banner::init();
+  pin_low(PIN_BANNER);
+};
+
+void Displays::init_chart() {
+  pin_high(PIN_CHART);
+  Chart::init();
+  pin_low(PIN_CHART);
+};
+
+void Displays::init() {
+  Serial.println("Initializing Displays...");
+  init_ctrl_pins();
+  Serial.println("Control pins ok.");
+  init_banner();
+  Serial.println("Banner display ok.");
+  init_chart();
+  Serial.println("Chart display ok.");
+  Serial.println("Displays initialized.");
 };
 
 void Displays::draw_banner(int price_now) {
-  digitalWrite(PIN_BANNER, HIGH);
-  delay(300);
-  Banner::init();
+  pin_high(PIN_BANNER);
   Banner::draw(price_now);
-  digitalWrite(PIN_BANNER, LOW);
-  delay(300);
+  pin_low(PIN_BANNER);
 };
 
 void Displays::draw_chart(price_data_t** price_data, uint32_t time_now) {
-  digitalWrite(PIN_CHART, HIGH);
-  delay(300);
-  Chart::init();
+  pin_high(PIN_CHART);
   Chart::draw(price_data, time_now);
-  digitalWrite(PIN_CHART, LOW);
-  delay(300);
+  pin_low(PIN_CHART);
 };
 
 void Displays::draw(price_data_t** price_data, uint32_t time_now) {
