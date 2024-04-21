@@ -25,7 +25,11 @@ void Chart::set_data_ptrs() {
     if (now) {
       data_now = i;
       data_from = i - 1;
-      data_to = i - 1 + PILLARS_NUM;
+      data_to = data_from + PILLARS_NUM;
+      // Prevent overflow, in case of inadequate future data
+      if (data_to > PRICES_MAX_NUM) {
+        data_to = PRICES_MAX_NUM;
+      }
       break;
     }
   }
@@ -38,8 +42,8 @@ void Chart::set_max_price() {
       max_price = data[i]->cents_x100;
     }
   }
-  // Add +1 to distinguish between 'max prices'
-  // It will be rounded, so f.ex. x.x, x.y, x.z would all show up as x
+  // Add +1 to round up the 'max price' on chart
+  // Otherwise, f.ex. 1.12, 1.23, 1.45 would all show up as just 1
   max_price += 100;
   // Upper limit 99, notice x100
   // Lower limit 05
