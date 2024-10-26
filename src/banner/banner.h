@@ -23,6 +23,6 @@ private:
   // Functions
   static int get_num_of_digits(int val);
   static char get_int_as_char(int val);
-  static char* get_int_as_str(int val, int len);
+  static char* get_int_as_str(int val);
   static void draw_price(int price_x100);
 };
