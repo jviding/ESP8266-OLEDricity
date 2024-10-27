@@ -4,6 +4,16 @@
 
 #include "time.h"
 
+
+// CHECK HOW TO DELETE OBJECT, INSTEAD OF POINTER
+// obj_t { *ptr }
+// if call "delete ptr" will it remove it?
+
+
+// Somewhere is leaking memory???
+
+
+
 // Show error codes on display?
 // F.ex. create class Error, to store/read
 // Would help debugging exceptions
