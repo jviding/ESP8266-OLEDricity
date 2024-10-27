@@ -7,10 +7,10 @@ Show electricity prices with 1.3" OLED display.
 Find RPi:
 \$ sudo nmap --open -sS -p 22 10.55.134.0/24
 
-USB:
+Flash using USB:
 \$ esptool.py --chip esp8266 --port /dev/ttyUSB0 write_flash -z 0x00000 firmware.bin
 
-Serial:
+Flash using Serial:
 \$ esptool.py --chip esp8266 --port /dev/ttyS0 write_flash -z 0x00000 firmware.bin
 
 Serial pins:
@@ -26,3 +26,6 @@ TX    -   U0RXD
       -   GPIO 0  (pull-down 10k)
       
 For normal boot operation, switch GPIO 0 to pull-up.
+
+Listen for Serial:
+\$ minicom -D /dev/ttyACM0 -b 115200
