@@ -25,7 +25,7 @@ int HTTPS_req::read_to_buffers(Stream* response, char** buffs, size_t buffs_max_
     // If buffer is not full, reached end of streamed response
     if (bytes_read < (int)buff_size) {
       buffs[i][bytes_read] = '\0';  // Add termination char to mark end of buffered stream
-      Serial.print("HTTPS: Allocated "); Serial.print(i + 1); Serial.println(" buffers.");
+      Serial.print("HTTPS: Allocated "); Serial.print(i + 1); Serial.println(" buffers for raw data.");
       return i + 1;                 // Notice i is index, where +1 for number of buffers
     }
   }

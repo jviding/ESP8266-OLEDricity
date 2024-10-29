@@ -17,7 +17,6 @@ int HTTPS_req::get_data(https_t** raw_data) {
     return -1;
   }
   // Allocate memory
-  Serial.println("HTTPS: Allocating memory for response.");
   char** buffs = nullptr;
   int buffs_num;
   // Send request
