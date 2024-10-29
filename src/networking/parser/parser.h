@@ -15,7 +15,7 @@ struct price_data_t {
 class Parser {
 public:
   // Functions
-  static bool get_price_data(https_t** raw_data, price_data_t** parsed_data);
+  static bool get_price_data(https_t* raw_data, price_data_t** parsed_data);
 
 private:
   // CONVERT
@@ -31,8 +31,6 @@ private:
   static bool has_next_json();
   static bool parse_next_json(price_data_t* data);
   static bool parse_response(price_data_t** first);
-  static void sort_data_time_ascending(price_data_t** data);
-  static void free_buffers();
 
   // READ
   // Variables
@@ -48,6 +46,7 @@ private:
   static bool skip_until_char(char c);
   static bool read_until_char(char c, char** ptr);
   static void append_char(char** ptr, size_t len, char c);
+  static void free_buffers();
 
   // SORT
   // Functions

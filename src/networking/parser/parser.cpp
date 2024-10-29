@@ -17,7 +17,7 @@ bool Parser::has_next_json() {
   if (!!skip_until_char('{')) {
     return true;
   }
-  Serial.println("Parser: EOF, no more JSONs to read.");
+  Serial.println("Parser: No more JSONs to read.");
   return false;
 };
 
@@ -66,7 +66,7 @@ bool Parser::parse_response(price_data_t** first) {
     data_prev = data_next;
   }
   if (!res_ok) {
-    Serial.println("Parser: Releasing memory allocated for data.");
+    Serial.println("Parser: Releasing memory allocated for parsed data.");
     while (*first != nullptr) {
       price_data_t* temp = (*first)->next;
       delete *first;
@@ -76,20 +76,14 @@ bool Parser::parse_response(price_data_t** first) {
   return res_ok;
 };
 
-bool Parser::get_price_data(https_t** raw_data, price_data_t** parsed_data) {
+bool Parser::get_price_data(https_t* raw_data, price_data_t** parsed_data) {
   Serial.println("Parser: Parsing response...");
-  init_read(*raw_data);
+  init_read(raw_data);
   if (!parse_response(parsed_data)) {
-    Serial.println("Parser: Releasing memory allocated for buffers.");
-    for (size_t i = 0; i < (*raw_data)->num; i++) {
-      if ((*raw_data)->buffs[i] != nullptr) {
-        delete[] (*raw_data)->buffs[i];
-      }
-    }
-    delete[] (*raw_data)->buffs;
-    delete (*raw_data);
+    Serial.println("Parser: Parsing failed.");
     return false;
-  }  
+  }
   sort_by_time_ascending(parsed_data);
+  Serial.println("Parser: Parsing completed.");
   return true;
 };

@@ -21,6 +21,7 @@ void Parser::init_read(https_t* raw_data) {
   buff_size = raw_data->size;
   char_ptr = 0;
   buff_ptr = 0;
+  delete raw_data;
 };
 
 bool Parser::next_buffer() {
@@ -31,6 +32,7 @@ bool Parser::next_buffer() {
   // Check next buffer exists
   if (buff_ptr == buffs_num) {
     Serial.println("Parser: Unexpected end of buffers.");
+    free_buffers();
     return false;
   }
   return true;
@@ -47,8 +49,8 @@ bool Parser::next_char(char* c) {
   char_ptr++;
   // If EOF, free the last buffer
   if (*c == '\0') {
-    delete[] buffs[buff_ptr];
-    buffs[buff_ptr] = nullptr;
+    Serial.println("Parser: Buffers EOF reached.");
+    free_buffers();
   }
   return true;
 };
@@ -60,7 +62,7 @@ bool Parser::skip_until_char(char c) {
       return true;
     }
   }
-  Serial.print("Parser: Failed skipping until '"); Serial.print(c); Serial.println("', unexpected EOF.");
+  //Serial.print("Parser: Failed skipping until '"); Serial.print(c); Serial.println("', unexpected EOF.");
   return false;
 };
 
@@ -92,6 +94,14 @@ bool Parser::read_until_char(char c, char** ptr) {
     }
   }
   delete[] read;
-  Serial.print("Parser: Failed reading until '"); Serial.print(c); Serial.println("', unexpected EOF.");
+  //Serial.print("Parser: Failed reading until '"); Serial.print(c); Serial.println("', unexpected EOF.");
   return false;
+};
+
+void Parser::free_buffers() {
+  Serial.println("Parser: Releasing buffers allocated for raw data.");
+  for (size_t i = 0; i < buffs_num; i++) {
+    if (buffs[i] != nullptr) delete[] buffs[i];
+  }
+  delete[] buffs;
 };
