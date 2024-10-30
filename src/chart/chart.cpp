@@ -102,8 +102,8 @@ void Chart::draw_y_mid() {
 };
 
 void Chart::draw(price_data_t** data, uint32_t time_now) {
-  Serial.println("Chart: Starting to draw...");
-  create_dataset(data, time_now);
+  Serial.println("Chart: Preparing dataset...");
+  create_dataset(data, time_now, &price_max);
   // Draw
   Serial.print("Chart: Drawing...");
   display.clearBuffer();

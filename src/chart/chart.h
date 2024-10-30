@@ -44,8 +44,7 @@ private:
   // DATASET
   // Functions
   static int to_data_time(time_t time_now);
-  static void delete_until_first(price_data_t** data, time_t time_now);
-  static void set_price_max(price_data_t** data);
-  static void delete_after_last(price_data_t** data);
-  static void create_dataset(price_data_t** data, time_t time_now);
+  static void set_first(price_data_t** data, time_t time_now);
+  static void set_price_max(price_data_t* data, int* price_max);
+  static void create_dataset(price_data_t** data, time_t time_now, int* price_max);
 };
