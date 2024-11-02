@@ -10,12 +10,23 @@
 #define PIN_BANNER  GPIO_14
 #define PIN_CHART   GPIO_16
 
+#define CHART_PILLARS_NUM 19
+
+
+struct dataset_t {
+  int size;
+  int price_max;
+  int price_now;
+  int time_now;
+  price_data_t** price_data;
+};
+
 
 class Displays {
 public:
   // Functions
   static void init();
-  static void draw(price_data_t** price_data, uint32_t time_now);
+  static bool draw(price_data_t* price_data, int time_now);
 
 private:
   // Functions
@@ -25,5 +36,12 @@ private:
   static void init_banner();
   static void init_chart();
   static void draw_banner(int price_now);
-  static void draw_chart(price_data_t** price_data, uint32_t time_now);
+  static void draw_chart(dataset_t* dataset);
+
+  // DATASET
+  // Functions
+  static bool set_ptr_to_data_now(dataset_t* dataset, price_data_t* data, int time_now);
+  static void try_shift_data_ptr_one_left(dataset_t* dataset);
+  static bool set_price_max(dataset_t* dataset, int dataset_size);
+  static bool create_dataset(dataset_t** dataset, price_data_t* data, int time_now);
 };

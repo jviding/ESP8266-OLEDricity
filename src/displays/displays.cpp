@@ -31,14 +31,12 @@ void Displays::init_chart() {
 };
 
 void Displays::init() {
-  Serial.println("Initializing Displays...");
+  Serial.println("Displays: Initializing...");
   init_ctrl_pins();
-  Serial.println("Control pins ok.");
+  Serial.println("Displays: Control pins ok.");
   init_banner();
-  Serial.println("Banner display ok.");
   init_chart();
-  Serial.println("Chart display ok.");
-  Serial.println("Displays initialized.");
+  Serial.println("Displays: Initialization ok.");
 };
 
 void Displays::draw_banner(int price_now) {
@@ -47,18 +45,28 @@ void Displays::draw_banner(int price_now) {
   pin_low(PIN_BANNER);
 };
 
-void Displays::draw_chart(price_data_t** price_data, uint32_t time_now) {
+void Displays::draw_chart(dataset_t* dataset) {
   pin_high(PIN_CHART);
-  Chart::draw(price_data, time_now);
+  //Chart::draw(dataset);
   pin_low(PIN_CHART);
 };
 
-void Displays::draw(price_data_t** price_data, uint32_t time_now) {
-  // Draw chart to calculate values and data_now
-  draw_chart(price_data, time_now);
-  // Read current price
-  size_t index = Chart::data_now;
-  int price = price_data[index]->cents_x100;
-  // Draw price banner
-  draw_banner(price);
+bool Displays::draw(price_data_t* price_data, int time_now) {
+  Serial.println("Displays: Starting to draw...");
+  // Create dataset
+  Serial.println("Displays: Calculating data.");
+  dataset_t* dataset = nullptr;
+  if (!create_dataset(&dataset, price_data, time_now)) {
+    Serial.println("Displays: Failed.");
+    return false;
+  }
+  // Draw banner
+  Serial.println("Displays: Drawing Banner...");
+  //draw_banner(dataset->price_now);
+  // Draw chart
+  Serial.println("Displays: Drawing Chart...");
+  //draw_chart(dataset);
+  // Free memory
+  delete dataset;
+  return true;
 };
