@@ -9,15 +9,22 @@
 
 
 // Get Finnish time from external source.
+// Returned as integer, in format YYYYmmDDhh.
 
 class NTP_time {
 public:
   // Functions
   static bool enable();
-  static bool get_finnish_time(time_t* time);
+  static bool get_finnish_time(int* time);
 
 private:
   // Variables
   static WiFiUDP udp;
   static NTPClient ntpClient;
+  static unsigned long lastNtpTime;
+  static unsigned long lastMillis;
+
+  // Functions
+  static bool update();
+  static int to_data_time(time_t time_now);
 };
