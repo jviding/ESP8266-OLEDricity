@@ -6,12 +6,11 @@ bool Networking::enable() {
   if (!NTP_time::enable()) {
     Serial.println("Network: Failed.");
     return false;
-  } else {
-    HTTPS_req::enable();
-    Serial.println("Network: Started.");
-    delay(500);
-    return true;
-  }  
+  }
+  HTTPS_req::enable();
+  Serial.println("Network: Started.");
+  delay(200);
+  return true;
 };
 
 void Networking::disable() {
@@ -19,10 +18,14 @@ void Networking::disable() {
   wifi_disconnect();
 }
 
-bool Networking::get_time(time_t* time) {
+bool Networking::get_time(int* time) {
   Serial.println("Network: Get time.");
   wifi_ensure_is_connected();
-  return NTP_time::get_finnish_time(time);
+  if (!NTP_time::get_finnish_time(time)) {
+    Serial.println("Network: Failed.");
+    return false;
+  }
+  return true;
 };
 
 bool Networking::get_data(price_data_t** data) {

@@ -26,7 +26,7 @@ public:
   static bool enable();
   static void disable();
   static bool get_data(price_data_t** data);
-  static bool get_time(time_t* time);
+  static bool get_time(int* time);
 
 private:
   // WIFI
