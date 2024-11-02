@@ -40,8 +40,8 @@ bool Parser::parse_next_json(price_data_t* data) {
   } else {
     Serial.println("Parser: Failed parsing JSON.");
   }
-  if (price != nullptr) delete[] price;
-  if (time != nullptr) delete[] time;
+  delete[] price;
+  delete[] time;
   return res_ok;
 };
 
@@ -69,7 +69,7 @@ bool Parser::parse_response(price_data_t** first) {
     Serial.println("Parser: Releasing memory allocated for parsed data.");
     while (*first != nullptr) {
       price_data_t* temp = (*first)->next;
-      delete *first;
+      delete first;
       *first = temp;
     }
   }
