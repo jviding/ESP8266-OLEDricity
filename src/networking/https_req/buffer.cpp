@@ -17,7 +17,7 @@ int HTTPS_req::read_to_buffer(Stream* response, char* buff, size_t buff_size) {
 
 // Return number of allocated buffers, or -1 if failed
 int HTTPS_req::read_to_buffers(Stream* response, char** buffs, size_t buffs_max_num, size_t buff_size) {
-  Serial.println("HTTPS: Reading response...");
+  Serial.println("HTTPS: Reading response.");
   for (size_t i = 0; i < buffs_max_num; i++) {
     // Allocate new buffer and read from streamed response
     buffs[i] = new char[buff_size];

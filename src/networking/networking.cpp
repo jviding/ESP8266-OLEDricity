@@ -38,5 +38,6 @@ bool Networking::get_data(price_data_t** data) {
   if (!res_ok) {
     Serial.println("Network: Failed.");
   }
+  Serial.println("Network: Price data ok.");
   return res_ok;
 };
