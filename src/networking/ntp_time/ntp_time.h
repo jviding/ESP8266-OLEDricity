@@ -15,7 +15,7 @@ class NTP_time {
 public:
   // Functions
   static bool enable();
-  static bool get_finnish_time(int* time);
+  static bool get_finnish_time(int* time_now);
 
 private:
   // Variables
@@ -26,5 +26,5 @@ private:
 
   // Functions
   static bool update();
-  static int to_data_time(time_t time_now);
+  static int to_data_time(time_t time);
 };

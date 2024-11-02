@@ -35,16 +35,16 @@ bool NTP_time::update() {
   return true;
 };
 
-int NTP_time::to_data_time(time_t time_now) {
-  int time = 0;                         // ----------
-  time += year(time_now)  *100*100*100; // YYYY------
-  time += month(time_now) *100*100;     // ----MM----
-  time += day(time_now)   *100;         // ------DD--
-  time += hour(time_now);               // --------HH
-  return time;                          // YYYYMMDDHH
+int NTP_time::to_data_time(time_t time) {
+  int data_time = 0;                     // ----------
+  data_time += year(time)  *100*100*100; // YYYY------
+  data_time += month(time) *100*100;     // ----MM----
+  data_time += day(time)   *100;         // ------DD--
+  data_time += hour(time);               // --------HH
+  return data_time;                      // YYYYMMDDHH
 };
 
-bool NTP_time::get_finnish_time(int* time) {
+bool NTP_time::get_finnish_time(int* time_now) {
   unsigned long elapsedTime = (millis() - lastMillis) / 1000;
   int oneDay = 24 * 60 * 60; // h * min * s
   if (elapsedTime < oneDay) {
@@ -52,7 +52,7 @@ bool NTP_time::get_finnish_time(int* time) {
   } else if (!update()) {
     return false;
   }
-  time_t time_now = finnish_timezone.toLocal(lastNtpTime + elapsedTime);
-  *time = to_data_time(time_now);
+  time_t time = finnish_timezone.toLocal(lastNtpTime + elapsedTime);
+  *time_now = to_data_time(time);
   return true;
 };
