@@ -18,10 +18,10 @@ void Networking::disable() {
   wifi_disconnect();
 }
 
-bool Networking::get_time(int* time) {
+bool Networking::get_time(int* time_now) {
   Serial.println("Network: Get time.");
   wifi_ensure_is_connected();
-  if (!NTP_time::get_finnish_time(time)) {
+  if (!NTP_time::get_finnish_time(time_now)) {
     Serial.println("Network: Failed.");
     return false;
   }
