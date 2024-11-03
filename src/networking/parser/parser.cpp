@@ -26,14 +26,14 @@ bool Parser::parse_next_json(price_data_t* data) {
   char* time = nullptr;
   bool res_ok = true;
   // Read price
-  res_ok &= skip_until_char(':');
-  res_ok &= read_until_char(',', &price);
+  res_ok = res_ok && skip_until_char(':');
+  res_ok = res_ok && read_until_char(',', &price);
   // Read time (startDate)
-  res_ok &= skip_until_char(':');
-  res_ok &= skip_until_char('"');
-  res_ok &= read_until_char(':', &time);
+  res_ok = res_ok && skip_until_char(':');
+  res_ok = res_ok && skip_until_char('"');
+  res_ok = res_ok && read_until_char(':', &time);
   // Read until end of JSON
-  res_ok &= skip_until_char('}');
+  res_ok = res_ok && skip_until_char('}');
   if (res_ok) {
     data->cents_x100 = str_to_int_x100(price);
     data->time = str_time_to_int(time);
