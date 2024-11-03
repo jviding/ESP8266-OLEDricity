@@ -21,8 +21,9 @@ private:
   static U8G2_SH1106_128X32_VISIONOX_F_HW_I2C display;
 
   // Functions
-  static int get_num_of_digits(int val);
-  static char get_int_as_char(int val);
-  static char* get_int_as_str(int val);
+  static int get_price_x100_num_of_digits_in_full_cents(int price_x100);
+  static int get_price_x100_num_of_digits_in_decimals(int price_x100);
+  static char int_to_char(int val);
+  static void price_x100_to_str(char** str, int price_x100);
   static void draw_price(int price_x100);
 };
