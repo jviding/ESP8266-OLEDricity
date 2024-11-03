@@ -7,5 +7,5 @@ struct dataset_t {
   int price_max;
   int price_now;
   int time_now;
-  price_data_t** price_data;
+  price_data_t* price_data;
 };
