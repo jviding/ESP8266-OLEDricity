@@ -3,11 +3,12 @@
 
 bool Networking::enable() {
   Serial.println("Network: Starting...");
+  wifi_connect();
+  HTTPS_req::enable();
   if (!NTP_time::enable()) {
     Serial.println("Network: Failed.");
     return false;
   }
-  HTTPS_req::enable();
   Serial.println("Network: Started.");
   delay(200);
   return true;
