@@ -35,7 +35,7 @@ void Displays::init() {
   init_ctrl_pins();
   Serial.println("Displays: Control pins ok.");
   init_banner();
-  init_chart();
+  //init_chart();
   Serial.println("Displays: Initialization ok.");
 };
 
@@ -62,7 +62,7 @@ bool Displays::draw(price_data_t* price_data, int time_now) {
   }
   // Draw banner
   Serial.println("Displays: Drawing Banner...");
-  //draw_banner(dataset->price_now);
+  draw_banner(dataset->price_now);
   // Draw chart
   Serial.println("Displays: Drawing Chart...");
   //draw_chart(dataset);
