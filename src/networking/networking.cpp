@@ -26,6 +26,7 @@ bool Networking::get_time(int* time_now) {
     Serial.println("Network: Failed.");
     return false;
   }
+  Serial.println("Network: Time received.");
   return true;
 };
 
@@ -34,10 +35,11 @@ bool Networking::get_data(price_data_t** data) {
   wifi_ensure_is_connected();
   https_t* raw_data;
   bool res_ok = true;
-  res_ok &= HTTPS_req::get_data(&raw_data) != -1;
-  res_ok &= Parser::get_price_data(raw_data, data);
+  res_ok = res_ok && HTTPS_req::get_data(&raw_data) != -1;
+  res_ok = res_ok && Parser::get_price_data(raw_data, data);
   if (!res_ok) {
     Serial.println("Network: Failed.");
   }
+  Serial.println("Network: Price data ready.");
   return res_ok;
 };
