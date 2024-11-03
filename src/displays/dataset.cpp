@@ -44,9 +44,9 @@ bool Displays::set_price_max(dataset_t* dataset, int dataset_size) {
 bool Displays::create_dataset(dataset_t** dataset, price_data_t* data, int time_now) {
   *dataset = new dataset_t;
   bool res_ok = true;
-  res_ok &= set_ptr_to_data_now(*dataset, data, time_now);
+  res_ok = res_ok && set_ptr_to_data_now(*dataset, data, time_now);
   try_shift_data_ptr_one_left(*dataset);
-  res_ok &= set_price_max(*dataset, CHART_PILLARS_NUM);
+  res_ok = res_ok && set_price_max(*dataset, CHART_PILLARS_NUM);
   if (!res_ok) {
     Serial.println("Dataset: Failed.");
     delete *dataset;
