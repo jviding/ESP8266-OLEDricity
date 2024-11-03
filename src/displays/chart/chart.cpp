@@ -57,6 +57,8 @@ void Chart::draw_y_mid() {
 };
 
 int Chart::get_Y_offset(int price_y_max, int price) {
+  // Convert back to price_x100 format
+  price_y_max *= 100;
   // When value < value_max, then value / value_max < 1.
   // As integers < 1 are rounded to zero, result is always 0.
   // To avoid this issue, multiply x100 and later divide x100.
@@ -80,12 +82,17 @@ void Chart::draw_X_label(int hour, int x_offset) {
 };
 
 void Chart::draw_pillars(dataset_t* dataset, int price_y_max) {
-  price_data_t* temp = *(dataset->price_data);
+  price_data_t* temp = dataset->price_data;
   for (int i = 0; i < dataset->size; i++) {
+
+    Serial.print(i); Serial.print(": ");
+    Serial.print(temp->time); Serial.print(" ");
+    Serial.println(temp->cents_x100);
+
     // Get price
     int price = temp->cents_x100;
-    price = price > 99 ? 99 : price;  // Upper limit 99
-    price = price < 0 ? 0 : price;    // Lower limit 0
+    price = price > 9900 ? 9900 : price;  // Upper limit 99.00
+    price = price < 0 ? 0 : price;        // Lower limit 0
     // Draw pillar
     int x_offset = 14 + (i * 6);
     int y_offset = get_Y_offset(price_y_max, price);
