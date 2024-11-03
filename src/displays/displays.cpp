@@ -3,12 +3,12 @@
 
 void Displays::pin_high(int pin) {
   digitalWrite(pin, HIGH);
-  delay(100);
+  delay(200);
 };
 
 void Displays::pin_low(int pin) {
   digitalWrite(pin, LOW);
-  delay(100);
+  delay(200);
 };
 
 void Displays::init_ctrl_pins() {
@@ -35,7 +35,7 @@ void Displays::init() {
   init_ctrl_pins();
   Serial.println("Displays: Control pins ok.");
   init_banner();
-  //init_chart();
+  init_chart();
   Serial.println("Displays: Initialization ok.");
 };
 
@@ -47,26 +47,23 @@ void Displays::draw_banner(int price_now) {
 
 void Displays::draw_chart(dataset_t* dataset) {
   pin_high(PIN_CHART);
-  //Chart::draw(dataset);
+  Chart::draw(dataset);
   pin_low(PIN_CHART);
 };
 
 bool Displays::draw(price_data_t* price_data, int time_now) {
   Serial.println("Displays: Starting to draw...");
-  // Create dataset
-  Serial.println("Displays: Calculating data.");
   dataset_t* dataset = nullptr;
   if (!create_dataset(&dataset, price_data, time_now)) {
-    Serial.println("Displays: Failed.");
+    Serial.println("Displays: Failed creating dataset.");
     return false;
   }
-  // Draw banner
-  Serial.println("Displays: Drawing Banner...");
+  Serial.println("Displays: Dataset ready.");
+  // Draw
   draw_banner(dataset->price_now);
-  // Draw chart
-  Serial.println("Displays: Drawing Chart...");
-  //draw_chart(dataset);
+  draw_chart(dataset);
   // Free memory
+  Serial.println("Displays: Drawing completed.");
   delete dataset;
   return true;
 };
