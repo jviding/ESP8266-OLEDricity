@@ -35,5 +35,5 @@ private:
   static void draw_pillar_solid(int y_offset, int x_offset);
   static void draw_X_label(int hour, int x_offset);
   static void draw_pillars(dataset_t* dataset, int price_max);
-  static void draw_y_mid();
+  static void draw_Y_line_horizontal(int price_y_max);
 };

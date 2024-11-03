@@ -41,21 +41,6 @@ void Chart::draw_Y_labels(int price_y_max) {
   display.drawStr(0, AXIS_Y_MAX, " 0");
 };
 
-void Chart::draw_y_mid() {
-  /*// Y Cursor
-  int height = get_pillar_height(max_price / 2);
-  int y = Y_PLOT_MAX - height;
-  // Draw axis horizontal
-  display.drawLine(10, y, X_CHART_MAX, y);
-  // Draw mid label
-  char* mid_label = get_int_as_label((max_price / 2) / 100);
-  y += 2;
-  display.drawStr(0, y, mid_label);
-  delete[] mid_label;
-  // Mid
-  draw_y_axis_mid();*/
-};
-
 int Chart::get_Y_offset(int price_y_max, int price) {
   // Convert back to price_x100 format
   price_y_max *= 100;
@@ -84,11 +69,6 @@ void Chart::draw_X_label(int hour, int x_offset) {
 void Chart::draw_pillars(dataset_t* dataset, int price_y_max) {
   price_data_t* temp = dataset->price_data;
   for (int i = 0; i < dataset->size; i++) {
-
-    Serial.print(i); Serial.print(": ");
-    Serial.print(temp->time); Serial.print(" ");
-    Serial.println(temp->cents_x100);
-
     // Get price
     int price = temp->cents_x100;
     price = price > 9900 ? 9900 : price;  // Upper limit 99.00
@@ -111,6 +91,17 @@ void Chart::draw_pillars(dataset_t* dataset, int price_y_max) {
   }
 };
 
+void Chart::draw_Y_line_horizontal(int price_y_max) {
+  int y_mid = price_y_max / 2;
+  // Draw line
+  int y_offset = get_Y_offset(price_y_max, y_mid * 100);
+  display.drawLine(AXIS_X_MIN, y_offset, AXIS_X_MAX, y_offset);
+  // Draw label
+  char* label = int_to_label(y_mid);
+  display.drawStr(0, y_offset + 3, label);
+  delete[] label;
+};
+
 void Chart::draw(dataset_t* dataset) {
   Serial.print("Chart: Drawing...");
   // Price max to correct format
@@ -121,6 +112,7 @@ void Chart::draw(dataset_t* dataset) {
   draw_XY_axis();
   draw_Y_labels(price_y_max);
   draw_pillars(dataset, price_y_max);
+  draw_Y_line_horizontal(price_y_max);
   display.sendBuffer();
   Serial.println("Ok.");
 };
