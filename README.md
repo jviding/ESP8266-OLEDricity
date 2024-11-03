@@ -37,4 +37,4 @@ ESP8266 NodeMCUv2:
 - SDA = D2 / GPIO4
 2) Display ctrl
 - pinBanner = D5 / GPIO14
-- pinChart  = D4 / GPIO16
+- pinChart  = D0 / GPIO16
