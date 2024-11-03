@@ -8,8 +8,8 @@ TimeChangeRule finnish_summer_time_start = { "EEST", Last, Sun, Mar, 2, 3*60 }; 
 TimeChangeRule finnish_winter_time_start = { "EET",  Last, Sun, Oct, 3, 2*60 };   // EET  +2h
 Timezone finnish_timezone(finnish_summer_time_start, finnish_winter_time_start);
 
-unsigned long lastNtpTime = 0;
-unsigned long lastMillis = 0;
+unsigned long NTP_time::lastNtpTime = 0;
+unsigned long NTP_time::lastMillis = 0;
 
 
 bool NTP_time::enable() {
@@ -46,7 +46,7 @@ int NTP_time::to_data_time(time_t time) {
 
 bool NTP_time::get_finnish_time(int* time_now) {
   unsigned long elapsedTime = (millis() - lastMillis) / 1000;
-  int oneDay = 24 * 60 * 60; // h * min * s
+  unsigned long oneDay = 24 * 60 * 60; // h * min * s
   if (elapsedTime < oneDay) {
     Serial.println("NTP: Using system local time.");
   } else if (!update()) {
