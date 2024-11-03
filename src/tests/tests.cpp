@@ -19,13 +19,22 @@ void Tests::print_price_data(price_data_t* data) {
   Serial.println("Price Data:");
   int counter = 1;
   while (data != nullptr) {
+    int is_negative = data->cents_x100 < 0;
     int full = data->cents_x100 / 100;
     int deci = data->cents_x100 % 100;
+    if (full < 0) full *= -1;
     if (deci < 0) deci *= -1;
-    // Print
+    // Row numbers
+    if (counter < 10) Serial.print(" ");
     Serial.print(counter); Serial.print(": ");
-    Serial.print(data->time); Serial.print(" - ");
-    Serial.print(full); Serial.print("."); Serial.println(deci);
+    // Time
+    Serial.print(data->time); Serial.print(" ");
+    // Price
+    if (is_negative) Serial.print("-");
+    Serial.print(full);
+    Serial.print(".");
+    if (deci < 10) Serial.print("0");
+    Serial.println(deci);
     // Counter
     counter++;
     data = data->next;
