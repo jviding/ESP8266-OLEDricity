@@ -1,15 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
-#include "../https_req/https_req.h"
-
-
-struct price_data_t {
-  int  cents_x100;
-  int  time;
-  price_data_t* next;
-  price_data_t* prev;
-};
+#include "../netStructs.h"
 
 
 class Parser {

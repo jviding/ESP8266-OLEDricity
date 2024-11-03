@@ -1,8 +1,8 @@
 #pragma once
 
-#include "networking/networking.h"
 #include "banner/banner.h"
 #include "chart/chart.h"
+#include "dataset.h"
 
 #define GPIO_14   14
 #define GPIO_16   16
@@ -11,15 +11,6 @@
 #define PIN_CHART   GPIO_16
 
 #define CHART_PILLARS_NUM 19
-
-
-struct dataset_t {
-  int size;
-  int price_max;
-  int price_now;
-  int time_now;
-  price_data_t** price_data;
-};
 
 
 class Displays {

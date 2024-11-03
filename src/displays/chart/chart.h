@@ -2,9 +2,7 @@
 
 #include "U8g2lib.h"
 #include <Wire.h>
-
-#include "../displays.h"
-
+#include "../dataset.h"
 
 #define SCREEN_X_MIN 0
 #define SCREEN_X_MAX 127
