@@ -69,6 +69,7 @@ void Chart::draw_X_label(int hour, int x_offset) {
 void Chart::draw_pillars(dataset_t* dataset, int price_y_max) {
   price_data_t* temp = dataset->price_data;
   for (int i = 0; i < dataset->size; i++) {
+    if (temp == nullptr) break;
     // Get price
     int price = temp->cents_x100;
     price = price > 9900 ? 9900 : price;  // Upper limit 99.00
