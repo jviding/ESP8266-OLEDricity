@@ -25,11 +25,13 @@ void Displays::try_shift_data_ptr_one_left(dataset_t* dataset) {
 
 bool Displays::set_price_max(dataset_t* dataset, int dataset_size) {
   int val = 0;
+  bool res_ok = true;
   price_data_t* temp = dataset->price_data;
   for (int i = 0; i < dataset_size; i++) {
     if (temp == nullptr) {
       Serial.println("Dataset: Unexpected EOF while resolving max price.");
-      return false;
+      res_ok = false;
+      break;
     }    
     if (temp->cents_x100 > val) {
       val = temp->cents_x100;
@@ -38,18 +40,15 @@ bool Displays::set_price_max(dataset_t* dataset, int dataset_size) {
   }
   dataset->price_max = val;
   dataset->size = dataset_size;
-  return true;
+  return res_ok;
 };
 
-bool Displays::create_dataset(dataset_t** dataset, price_data_t* data, int time_now) {
-  *dataset = new dataset_t;
-  bool res_ok = true;
-  res_ok = res_ok && set_ptr_to_data_now(*dataset, data, time_now);
+// Return 0: No data for current time
+// Return 1: Success
+// Return 2: Success, but with dataset unexpected EOF
+int Displays::create_dataset(dataset_t** dataset, price_data_t* data, int time_now) {
+  if (!set_ptr_to_data_now(*dataset, data, time_now)) return 0;
   try_shift_data_ptr_one_left(*dataset);
-  res_ok = res_ok && set_price_max(*dataset, CHART_PILLARS_NUM);
-  if (!res_ok) {
-    Serial.println("Dataset: Failed.");
-    delete *dataset;
-  }
-  return res_ok;
+  if (!set_price_max(*dataset, CHART_PILLARS_NUM)) return 2;
+  return 1;
 };
