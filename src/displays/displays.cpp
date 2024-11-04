@@ -33,7 +33,7 @@ void Displays::init_chart() {
 void Displays::init() {
   Serial.println("Displays: Initializing...");
   init_ctrl_pins();
-  Serial.println("Displays: Control pins ok.");
+  Serial.println("Displays: Enabled control pins.");
   init_banner();
   init_chart();
   Serial.println("Displays: Initialization ok.");
@@ -54,17 +54,16 @@ void Displays::draw_chart(dataset_t* dataset) {
 int Displays::draw(price_data_t* price_data, int time_now) {
   Serial.println("Displays: Starting to draw...");
   dataset_t* dataset = new dataset_t;
-  int res_ok = 1;
-  if ((res_ok = create_dataset(&dataset, price_data, time_now)) == 0) {
+  int res_ok = create_dataset(&dataset, price_data, time_now);
+  if (res_ok != 0) {
+    Serial.println("Displays: Dataset ready.");  
+    // Draw
+    draw_banner(dataset->price_now);
+    draw_chart(dataset);
+    Serial.println("Displays: Drawing ok.");
+  } else {
     Serial.println("Displays: Failed creating dataset.");
-    return res_ok;
   }
-  Serial.println("Displays: Dataset ready.");  
-  // Draw
-  draw_banner(dataset->price_now);
-  draw_chart(dataset);
-  // Free memory
-  Serial.println("Displays: Drawing completed.");
   delete dataset;
-  return true;
+  return res_ok;
 };
