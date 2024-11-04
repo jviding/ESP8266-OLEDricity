@@ -2,7 +2,7 @@
 
 
 bool Displays::set_ptr_to_data_now(dataset_t* dataset, price_data_t* data, int time_now) {
-  while (data->next != nullptr) {
+  while (data != nullptr) {
     if (data->time == time_now) {
       dataset->time_now = time_now;
       dataset->price_now = data->cents_x100;
@@ -43,7 +43,7 @@ bool Displays::set_price_max(dataset_t* dataset, int dataset_size) {
   return res_ok;
 };
 
-// Return 0: No data for current time
+// Return 0: No data matching time_now
 // Return 1: Success
 // Return 2: Success, but with dataset unexpected EOF
 int Displays::create_dataset(dataset_t** dataset, price_data_t* data, int time_now) {
