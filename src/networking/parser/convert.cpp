@@ -25,7 +25,7 @@ int Parser::str_to_int_x100(char* str) {
       return result * 100 * (is_negative ? -1 : 1); // Return just x100
     }
     result = result * 10 + char_to_int(*str);
-    *str++;
+    str++;
   }
   // Append 2x decimals, for x100
   bool has_dec_1 = *(str + 1) != '\0';                  // Has first decimal?
