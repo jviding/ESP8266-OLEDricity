@@ -4,20 +4,27 @@
 //#include "led/led.h"
 //#include "time.h"
 
+#include "tests/tests.h"
+
  /* 
   * IDEAS
   * - Show price Now and Day Average?
   * - Follow actual price with mid line?
-  * - Pull-down to display sclk?
+  * - Use set address, and remove mosfets?
+  * 
+  * BUG/FIX
+  * - Pull-ups to display sclk
+  * 
+  * 
   */
 
-  // Use set address?
-  // Fixes problems with Mosfet?
+// Show negative price on Banner
 
 // Show error codes on display?
 // F.ex. create class Error, to store/read
 // Would help debugging exceptions
 // WiFi can freeze - add timeout and retry? (show error?)
+
 
 void start_serial() {
   Serial.begin(115200);
@@ -30,57 +37,48 @@ void start_serial() {
 
 void setup() {
   start_serial();
-  //Chart::init();
   //Led::init();
-  //Displays::init();
+  Displays::init();
   Networking::enable();
 };
 
-void debug_print_heap() {
-  uint32_t free = ESP.getFreeHeap();
-  Serial.print("Free heap: ");
-  Serial.println(free);
-};
-
 void loop() {
+
   bool res_ok = true;
+
   // Get time
-  time_t time_now;
+  int time_now = 0;
   res_ok &= Networking::get_time(&time_now);
   // Get data
-  price_data_t* data;
+  price_data_t* data = nullptr;
   res_ok &= Networking::get_data(&data);
+ 
+  while (res_ok) {
+    // Draw
+    res_ok = Displays::draw(data, time_now) == 1;
+    // Wait until hour changes
+    //time_now = new_time
 
-  // Test
-  Serial.print("Main: Time is now "); Serial.println(time_now);
+    if (time_now % 23 == 0) {
+      time_now += 100;
+      time_now /= 100;
+    } else {
+      time_now++;
+    }
 
-  Serial.print("\n Main: Price Data");
-  int counter = 1;
-  while (data != nullptr) {
-    // Print
-    Serial.print(" -"); Serial.print(counter); Serial.print(": ");
-    Serial.print("Time: "); Serial.print(data->time);
-    Serial.print(" Price: "); Serial.print(data->cents_x100 / 100); Serial.print("."); Serial.println(data->cents_x100 % 100);
-    // Delete
-    price_data_t* temp = data->next;
-    delete data;
-    data = temp;
-    // Counter
-    counter++;
+    if (res_ok != 0) {
+      res_ok = true;
+    }
+
+    delay(2000);
   }
-  Serial.print("\n\n");
 
+  // TESTS
+  //Tests::print_time(time_now);
+  //Tests::print_price_data(data);
+  Tests::debug_print_heap();
 
-  delay(5000);
-
-
-  //Chart::draw();
-  // Draw to displays
-  //Displays::draw(price_data, time_now);
-
-
-  // Leds
-
+  // LEDS
   /*delay(500);
   Led::blue();
   delay(500);
@@ -92,9 +90,21 @@ void loop() {
 
   // Wait 1h -> Draw next hour
   // Wait 12h -> new data
+  // Function to compute delay?
+  // Return 1/2 of time until hour change?
+  // Avoid too small values, set limits
+
+  // New data only when prev ends!
  
   // Then disconnect WiFI for 12h or so
   // If this fails, retry and x2 the wait if fails
   // Show error on screen?
 
+  while (data != nullptr) {
+    price_data_t* temp = data->next;
+    delete data;
+    data = temp;
+  }
+
+  delay(2000);
 };
