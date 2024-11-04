@@ -51,14 +51,15 @@ void Displays::draw_chart(dataset_t* dataset) {
   pin_low(PIN_CHART);
 };
 
-bool Displays::draw(price_data_t* price_data, int time_now) {
+int Displays::draw(price_data_t* price_data, int time_now) {
   Serial.println("Displays: Starting to draw...");
-  dataset_t* dataset = nullptr;
-  if (!create_dataset(&dataset, price_data, time_now)) {
+  dataset_t* dataset = new dataset_t;
+  int res_ok = 1;
+  if ((res_ok = create_dataset(&dataset, price_data, time_now)) == 0) {
     Serial.println("Displays: Failed creating dataset.");
-    return false;
+    return res_ok;
   }
-  Serial.println("Displays: Dataset ready.");
+  Serial.println("Displays: Dataset ready.");  
   // Draw
   draw_banner(dataset->price_now);
   draw_chart(dataset);

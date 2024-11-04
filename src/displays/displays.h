@@ -17,7 +17,7 @@ class Displays {
 public:
   // Functions
   static void init();
-  static bool draw(price_data_t* price_data, int time_now);
+  static int draw(price_data_t* price_data, int time_now);
 
 private:
   // Functions
@@ -34,5 +34,5 @@ private:
   static bool set_ptr_to_data_now(dataset_t* dataset, price_data_t* data, int time_now);
   static void try_shift_data_ptr_one_left(dataset_t* dataset);
   static bool set_price_max(dataset_t* dataset, int dataset_size);
-  static bool create_dataset(dataset_t** dataset, price_data_t* data, int time_now);
+  static int create_dataset(dataset_t** dataset, price_data_t* data, int time_now);
 };
