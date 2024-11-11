@@ -3,6 +3,7 @@
 #include <ESP8266WiFi.h>
 #include <BearSSLHelpers.h>
 #include <ESP8266HTTPClient.h>
+#include "parser/parser.h"
 #include "../netStructs.h"
 
 #include "../../config.h"
@@ -21,7 +22,7 @@ class HTTPS_req {
 public:
   // Functions
   static void enable();
-  static int get_data(https_t** raw_data);
+  static bool get_data(price_data_t** data);
 
 private:
   // Variables
@@ -31,4 +32,5 @@ private:
   // Functions
   static int read_to_buffer(Stream* response, char* buff, size_t buff_size);
   static int read_to_buffers(Stream* response, char** buffs, size_t buffs_num, size_t buff_size);
+  static int get_raw_data(char** buffs, size_t buffs_max_num, size_t buff_size);  
 };
