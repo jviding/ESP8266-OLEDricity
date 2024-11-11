@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Arduino.h>
-#include "../netStructs.h"
-
+#include "../https_t.h"
+#include "../../netStructs.h"
 
 class Parser {
 public:
