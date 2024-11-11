@@ -77,8 +77,5 @@ bool HTTPS_req::get_data(price_data_t** data) {
   if (buffs_num == -1) return false;
   // Parse raw response to data
   https_t* raw_data = new https_t{buffs_num, BUFFER_SIZE, buffs};
-  if (!Parser::get_price_data(raw_data, data)) return false;
-  //
-  Serial.println("HTTPS: Ok.");
-  return true;
+  return Parser::get_price_data(raw_data, data);
 };
