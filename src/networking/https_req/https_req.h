@@ -22,7 +22,7 @@ class HTTPS_req {
 public:
   // Functions
   static void enable();
-  static bool get_data(price_data_t** data);
+  static bool get_price_data(price_data_t** data);
 
 private:
   // Variables

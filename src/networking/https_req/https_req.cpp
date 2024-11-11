@@ -69,7 +69,7 @@ int HTTPS_req::get_raw_data(char** buffs, size_t buffs_max_num, size_t buff_size
   return buffs_num;
 };
 
-bool HTTPS_req::get_data(price_data_t** data) {
+bool HTTPS_req::get_price_data(price_data_t** data) {
   Serial.println("HTTPS: Sending request...");
   // Send request and read raw response
   char** buffs = nullptr;
