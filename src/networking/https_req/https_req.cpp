@@ -25,15 +25,15 @@ int HTTPS_req::read_to_buffer(Stream* response, char* buff, size_t buff_size) {
 };
 
 // Return number of allocated buffers, or -1 if failed
-int HTTPS_req::read_to_buffers(Stream* response, char** buffs, size_t buffs_max_num, size_t buff_size) {
-  buffs = new char*[buffs_max_num];
+int HTTPS_req::read_to_buffers(Stream* response, char*** buffs, size_t buffs_max_num, size_t buff_size) {
+  *buffs = new char*[buffs_max_num];
   for (size_t i = 0; i < buffs_max_num; i++) {
     // Allocate new buffer and read from streamed response
-    buffs[i] = new char[buff_size];
-    int bytes_read = read_to_buffer(response, buffs[i], buff_size);
+    (*buffs)[i] = new char[buff_size];
+    int bytes_read = read_to_buffer(response, (*buffs)[i], buff_size);
     // If buffer is not full, reached end of streamed response
     if (bytes_read < (int)buff_size) {
-      buffs[i][bytes_read] = '\0';  // Add termination char to mark end of buffered stream
+      (*buffs)[i][bytes_read] = '\0';  // Add termination char to mark end of buffered stream
       //Serial.print("HTTPS: Allocated "); Serial.print(i + 1); Serial.println(" buffers for raw data.");
       return i + 1;                 // Notice i is index, where +1 for number of buffers
     }
@@ -41,13 +41,13 @@ int HTTPS_req::read_to_buffers(Stream* response, char** buffs, size_t buffs_max_
   Serial.println("HTTPS: Buffer overflow while reading response.");
   Serial.println("HTTPS: Freeing allocated buffers.");
   for (size_t i = 0; i < buffs_max_num; i++) {
-    delete[] buffs[i];
+    delete[] (*buffs)[i];
   }
-  delete[] buffs;
+  delete[] *buffs;
   return -1;
 };
 
-int HTTPS_req::get_raw_data(char** buffs, size_t buffs_max_num, size_t buff_size) {
+int HTTPS_req::get_raw_data(char*** buffs, size_t buffs_max_num, size_t buff_size) {
   int buffs_num = -1;
   // Initialize client
   if (!https.begin(client, API_URL)) {
@@ -73,7 +73,7 @@ bool HTTPS_req::get_price_data(price_data_t** data) {
   Serial.println("HTTPS: Sending request...");
   // Send request and read raw response
   char** buffs = nullptr;
-  int buffs_num = get_raw_data(buffs, BUFFERS_MAX_NUM, BUFFER_SIZE);
+  int buffs_num = get_raw_data(&buffs, BUFFERS_MAX_NUM, BUFFER_SIZE);
   if (buffs_num == -1) return false;
   // Parse raw response to data
   https_t* raw_data = new https_t{buffs_num, BUFFER_SIZE, buffs};

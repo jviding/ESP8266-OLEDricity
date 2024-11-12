@@ -31,6 +31,6 @@ private:
 
   // Functions
   static int read_to_buffer(Stream* response, char* buff, size_t buff_size);
-  static int read_to_buffers(Stream* response, char** buffs, size_t buffs_num, size_t buff_size);
-  static int get_raw_data(char** buffs, size_t buffs_max_num, size_t buff_size);  
+  static int read_to_buffers(Stream* response, char*** buffs, size_t buffs_num, size_t buff_size);
+  static int get_raw_data(char*** buffs, size_t buffs_max_num, size_t buff_size);  
 };
