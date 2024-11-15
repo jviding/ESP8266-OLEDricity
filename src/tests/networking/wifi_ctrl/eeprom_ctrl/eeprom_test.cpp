@@ -18,8 +18,8 @@ bool Eeprom_test::try_read() {
 };
 
 bool Eeprom_test::try_write() {
-  char* ssid = new char[3]{'a', 's', 'd'};
-  char* pwd = new char[3]{'1', '2', '3'};
+  char* ssid = new char[4]{'a', 's', 'd', '\0'};
+  char* pwd = new char[4]{'1', '2', '3', '\0'};
   bool res_ok = Eeprom_ctrl::write_SSID_and_password(ssid, pwd);
   if (res_ok) {
     Serial.println("Try write - Succeeded");
