@@ -33,7 +33,7 @@ void Displays::init_chart() {
 void Displays::init() {
   Serial.println("Displays: Initializing...");
   init_ctrl_pins();
-  Serial.println("Displays: Enabled control pins.");
+  Serial.println("Displays: Control pins enabled.");
   init_banner();
   init_chart();
   Serial.println("Displays: Initialization ok.");
