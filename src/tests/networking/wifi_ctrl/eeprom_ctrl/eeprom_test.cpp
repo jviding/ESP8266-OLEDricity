@@ -67,5 +67,6 @@ void Eeprom_test::test() {
   print_result(res_2, 2);
   print_result(res_3, 3);
   print_result(res_4, 4);
+  Serial.println("\n");
   delay(1000);
 };
