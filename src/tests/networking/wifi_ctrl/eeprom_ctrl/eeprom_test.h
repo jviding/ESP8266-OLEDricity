@@ -6,7 +6,7 @@
 
 class Eeprom_test {
 public:
-  static void test();
+  static bool test();
 
 private:
   static bool try_read();

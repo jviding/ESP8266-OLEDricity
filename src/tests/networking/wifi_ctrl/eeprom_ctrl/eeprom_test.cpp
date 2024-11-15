@@ -39,7 +39,7 @@ bool Eeprom_test::print_result(bool res_ok, int num_test) {
   return res_ok;
 };
 
-void Eeprom_test::test() {
+bool Eeprom_test::test() {
   Serial.println("\n** EEPROM TESTS **\n");
   // 1. Clear SSID and Password
   Serial.println("Test: Clearing SSID and Password.");
@@ -69,4 +69,5 @@ void Eeprom_test::test() {
   print_result(res_4, 4);
   Serial.println("\n");
   delay(1000);
+  return res_1 && res_2 && res_3 && res_4;
 };
