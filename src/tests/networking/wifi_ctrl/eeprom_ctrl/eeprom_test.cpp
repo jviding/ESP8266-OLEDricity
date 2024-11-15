@@ -39,7 +39,7 @@ bool Eeprom_test::print_result(bool res_ok, int num_test) {
   return res_ok;
 };
 
-bool Eeprom_test::test() {
+bool Eeprom_test::test_read_write() {
   Serial.println("\n** EEPROM TESTS **\n");
   // 1. Clear SSID and Password
   Serial.println("Test: Clearing SSID and Password.");

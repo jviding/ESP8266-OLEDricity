@@ -6,7 +6,7 @@
 
 class Eeprom_test {
 public:
-  static bool test();
+  static bool test_read_write();
 
 private:
   static bool try_read();
