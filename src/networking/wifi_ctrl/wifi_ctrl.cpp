@@ -22,13 +22,13 @@ bool WiFi_ctrl::is_connected() {
 bool WiFi_ctrl::is_connecting() {
   switch(WiFi.status()) {
     case WL_NO_SSID_AVAIL:
-      Serial.println("\nWiFi: SSID not available, incorrect?");
+      Serial.println("SSID not available, incorrect?");
       return false;
     case WL_CONNECT_FAILED:
-      Serial.println("\nWiFi: Connection failed, incorrect password?");
+      Serial.println("Failed, incorrect password?");
       return false;
     case WL_IDLE_STATUS:
-      Serial.println("\nWiFi: WiFi module is idle.");
+      Serial.println("Module is idle.");
       return false;
     default:
       return true;
