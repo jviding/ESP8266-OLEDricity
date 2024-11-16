@@ -9,6 +9,12 @@
 
 class WiFi_test {
 public:
+  static bool test_wifi_modes();
   static bool test_eeprom();
   static bool test_server_over_WiFi();
+  static bool test_server_over_HotSpot();
+
+private:
+  static bool toggle_wifi();
+  static bool toggle_hotspot();
 };
