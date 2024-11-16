@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Arduino.h>
+#include "../displays/displays.h"
+#include "../leds/leds.h"
 #include "../networking/networking.h"
 #include "networking/network_test.h"
 
@@ -11,5 +13,7 @@ public:
   static void debug_print_heap();
 
 private:
+  static void test_displays();
+  static void test_leds();
   static void test_networking();
 };
