@@ -9,7 +9,7 @@ bool WiFi_ctrl::init() {
   Eeprom_ctrl::init();
   Server_ctrl::init();
   if (!Eeprom_ctrl::read_SSID_and_password(&SSID, &PWD)) {
-    Serial.println("WiFi: Failed.");
+    Serial.println("WiFi: Logon credentials missing.");
     return false;
   }
   return true;
