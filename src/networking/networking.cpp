@@ -39,14 +39,12 @@ bool Networking::set_WiFi_SSID_and_password() {
 
 bool Networking::get_time(int* time_now) {
   Serial.println("Network: Get time.");
-  WiFi_ctrl::connect();
-  return print_result(NTP_time::get_finnish_time(time_now));
+  return print_result(WiFi_ctrl::connect() && NTP_time::get_finnish_time(time_now));
 };
 
 bool Networking::get_data(price_data_t** data) {
   Serial.println("Network: Get price data.");
-  WiFi_ctrl::connect();
-  return print_result(HTTPS_req::get_price_data(data));
+  return print_result(WiFi_ctrl::connect() && HTTPS_req::get_price_data(data));
 };
 
 bool Networking::print_result(bool res_ok) {
