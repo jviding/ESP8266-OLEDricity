@@ -65,17 +65,17 @@ void WiFi_ctrl::ip_address_to_str(IPAddress IP, char** ip_address) {
 
 bool WiFi_ctrl::hotspot_enable(char** ip_address, char** password) {
   Serial.println("WiFi: HotSpot starting...");
-  Serial.println(" - Name: Electricube");
   // Create password  
   generate_random_8_digit_password(password);
-  Serial.print(" - Password: "); Serial.println(*password);
   // Open HotSpot
   WiFi.mode(WIFI_AP);
   if (WiFi.softAP("Electricube", *password)) {
     IPAddress IP = WiFi.softAPIP();
     ip_address_to_str(IP, ip_address);
-    Serial.print(" - IP address:"); Serial.println(*ip_address);
     Serial.println("WiFi: HotSpot started.");
+    Serial.println(" - Name: Electricube");
+    Serial.print(" - Password: "); Serial.println(*password);
+    Serial.print(" - IP address:"); Serial.println(*ip_address);
     return true;
   } else {
     Serial.println("WiFi: Failed.");
