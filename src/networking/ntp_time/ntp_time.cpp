@@ -20,12 +20,10 @@ bool NTP_time::enable() {
   Serial.println("NTP: Enabled.");
   ntpClient.begin();
   delay(200);
-  get_NTP_time();
-  delay(200);
   return true;
 };
 
-bool NTP_time::get_NTP_time() {
+bool NTP_time::update_NTP_time() {
   Serial.print("NTP: Updating time from server...");
   if (!ntpClient.update()) {
     Serial.println("Failed.");
@@ -49,9 +47,9 @@ int NTP_time::to_data_time(time_t time) {
 bool NTP_time::get_finnish_time(int* time_now) {
   unsigned long elapsedTime = (millis() - lastMillis) / 1000;
   unsigned long oneDay = 24 * 60 * 60; // h * min * s
-  if (elapsedTime < oneDay) {
+  if (lastNtpTime != 0 && elapsedTime < oneDay) {
     Serial.println("NTP: Using local system time.");
-  } else if (!get_NTP_time()) {
+  } else if (!update_NTP_time()) {
     return false;
   }
   time_t time = finnish_timezone.toLocal(lastNtpTime + elapsedTime);

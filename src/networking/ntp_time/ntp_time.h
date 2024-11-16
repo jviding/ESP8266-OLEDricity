@@ -25,6 +25,6 @@ private:
   static unsigned long lastMillis;
 
   // Functions
-  static bool get_NTP_time();
+  static bool update_NTP_time();
   static int to_data_time(time_t time);
 };
