@@ -1,15 +1,22 @@
 #pragma once
 
 #include <Arduino.h>
-#include "wifi_ctrl/wifi_test.h"
+#include "../../networking/networking.h"
 
-//#include "../../../../networking/wifi_ctrl/eeprom_ctrl/eeprom_ctrl.h"
+#include "https_test/https_test.h"
+#include "ntp_test/ntp_test.h"
+#include "wifi_ctrl/wifi_test.h"
 
 
 class Network_test {
 public:
-  static void test_wifi_eeprom();
-
-private:
-  static bool some();
+  // HTTPS
+  static void test_get_and_print_price_data();
+  // NTP
+  static void get_and_print_time();
+  // WIFI
+  static bool test_wifi_modes();
+  static bool test_wifi_eeprom();
+  static bool test_wifi_server_over_WiFi();
+  static bool test_wifi_server_over_HotSpot();
 };
