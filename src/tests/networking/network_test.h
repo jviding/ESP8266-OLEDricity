@@ -22,4 +22,7 @@ public:
   static bool test_wifi_eeprom();
   static bool test_wifi_server_over_WiFi();
   static bool test_wifi_server_over_HotSpot();
+
+private:
+  static bool toggle_WiFi();
 };
