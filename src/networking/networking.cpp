@@ -3,12 +3,10 @@
 
 bool Networking::enable() {
   Serial.println("Network: Starting...");
-  bool res_ok = WiFi_ctrl::init();
   HTTPS_req::init();
   NTP_time::enable();
-  if (!res_ok) {
-    Serial.println("Network: No WiFi credentials.");
-  }
+  bool res_ok = WiFi_ctrl::init();
+  if (!res_ok) Serial.println("Network: No WiFi credentials.");
   return print_result(res_ok);
 };
 
