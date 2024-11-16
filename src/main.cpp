@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "networking/networking.h"
 #include "displays/displays.h"
-#include "led/led.h"
+#include "leds/leds.h"
 //#include "time.h"
 
 #include "tests/tests.h"
@@ -17,6 +17,8 @@
   * 
   * 
   */
+
+// Allow WiFi without password!
 
 // Show negative price on Banner
 
@@ -35,14 +37,42 @@ void start_serial() {
   Serial.println("Main: Serial started.");
 };
 
+bool set_wifi_credentials() {
+  // Enable HotSpot
+  char* ip_address = nullptr;
+  char* password = nullptr;
+  Networking::hotspot_enable(&ip_address, &password);
+  delete[] ip_address;
+  delete[] password;
+
+  // Test these
+  Serial.println("MAIN: Write IP & PWD to display");
+  Serial.print(" - IP: "); Serial.println(ip_address);
+  Serial.print(" - PWD: "); Serial.println(password);
+
+  // Set WiFi credentials
+  Networking::set_WiFi_SSID_and_password();
+  // Disable HotSpot
+  Networking::hotspot_disable();
+
+  // Return error & show on display
+  return true;
+};
+
 void setup() {
   start_serial();
-
+  // TEST
   Tests::test();
-
+  // PRODUCTION
   //Led::init();
-  //Displays::init();
-  //Networking::enable();
+  Displays::init();
+  if (!Networking::enable()) { // BUTTON PRESS FOR RESET
+    set_wifi_credentials();
+  }
+
+  // Show errors on displays?
+  // Codes or text?
+
 };
 
 void loop() {
@@ -75,6 +105,4 @@ void loop() {
   // If this fails, retry and x2 the wait if fails
   // Show error on screen?
 
-  
-  
 };
