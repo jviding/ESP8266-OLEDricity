@@ -68,6 +68,5 @@ bool Eeprom_test::test_read_write() {
   print_result(res_3, 3);
   print_result(res_4, 4);
   Serial.println("\n");
-  delay(1000);
   return res_1 && res_2 && res_3 && res_4;
 };
