@@ -3,9 +3,9 @@
 
 bool WiFi_test::toggle_wifi() {
   Serial.println("Test WiFi: Toggle WiFi");
-  WiFi_ctrl::connect();
+  bool res_ok = WiFi_ctrl::connect();
   delay(500);
-  bool res_ok = WiFi_ctrl::disconnect();
+  res_ok = res_ok && WiFi_ctrl::disconnect();
   delay(500);
   return res_ok;
 };
@@ -44,13 +44,13 @@ bool WiFi_test::test_eeprom() {
 
 bool WiFi_test::test_server_over_WiFi() {
   Serial.println("Test server over WiFi: Connect");
-  WiFi_ctrl::connect();
+  bool res_ok = WiFi_ctrl::connect();
   Serial.println("Test server over WiFi: Connected"); 
   delay(500);
   Server_test::test_web_service();
   delay(500);
   Serial.println("Test server over WiFi: Disconnect");
-  bool res_ok = WiFi_ctrl::disconnect();
+  res_ok = res_ok && WiFi_ctrl::disconnect();
   if (res_ok) {
     Serial.println("Test server over WiFi: Disconnected");
     Serial.println("\n** Test server over WiFi: SUCCESS! **\n");
