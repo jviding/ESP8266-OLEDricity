@@ -133,6 +133,7 @@ bool WiFi_ctrl::set_WiFi_SSID_and_password() {
   Server_ctrl::run(&SSID, &PWD);
   // Write to memory
   res_ok = res_ok && Eeprom_ctrl::write_SSID_and_password(SSID, PWD);
+  delay(1000);
   // Done
   if (!res_ok) {
     Serial.println("WiFi: Failed.");
