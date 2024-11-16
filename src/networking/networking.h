@@ -2,6 +2,7 @@
 
 #include "https_req/https_req.h"
 #include "ntp_time/ntp_time.h"
+#include "wifi_ctrl/wifi_ctrl.h"
 #include "netStructs.h"
 
 #include "../secrets.h"
@@ -22,15 +23,16 @@ class Networking {
 public:
   // Functions
   static bool enable();
-  static void disable();
+  static bool connect();
+  static bool disconnect();
+  static bool hotspot_enable(char** ip_address, char** password);
+  static bool hotspot_disable();
+  static bool set_WiFi_SSID_and_password();
+
   static bool get_data(price_data_t** data);
   static bool get_time(int* time);
 
 private:
-  // WIFI
   // Functions
-  static bool wifi_is_connected();
-  static void wifi_connect();
-  static void wifi_disconnect();
-  static void wifi_ensure_is_connected(); 
+  static bool print_result(bool res_ok);
 };
