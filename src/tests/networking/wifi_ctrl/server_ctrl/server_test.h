@@ -6,5 +6,5 @@
 
 class Server_test {
 public:
-  static bool test_web_service();
+  static void test_web_service();
 };

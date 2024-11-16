@@ -1,7 +1,7 @@
 #include "server_test.h"
 
 
-bool Server_test::test_web_service() {
+void Server_test::test_web_service() {
   Serial.println("\n** SERVER TEST **\n");
   char* ssid = nullptr;
   char* pwd = nullptr;
@@ -11,5 +11,4 @@ bool Server_test::test_web_service() {
   delete[] ssid;
   delete[] pwd;
   Serial.println("Test: Completed.");
-  return true;
 };

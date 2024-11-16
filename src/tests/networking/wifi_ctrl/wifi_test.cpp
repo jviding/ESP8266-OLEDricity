@@ -42,22 +42,21 @@ bool WiFi_test::test_eeprom() {
 };
 
 bool WiFi_test::test_server_over_WiFi() {
-  bool res_ok = true;
   Serial.println("Test server over WiFi: Connect");
   WiFi_ctrl::connect();
   Serial.println("Test server over WiFi: Connected"); 
   delay(500);
-  res_ok = res_ok && Server_test::test_web_service();
+  Server_test::test_web_service();
   delay(500);
   Serial.println("Test server over WiFi: Disconnect");
-  res_ok = res_ok && WiFi_ctrl::disconnect();
-  Serial.println("Test server over WiFi: Disconnected");
-  delay(500);
+  bool res_ok = WiFi_ctrl::disconnect();
   if (res_ok) {
+    Serial.println("Test server over WiFi: Disconnected");
     Serial.println("\n** Test server over WiFi: SUCCESS! **\n");
   } else {
     Serial.println("\n** Test server over WiFi: Something went wrong! **\n");
   }
+  delay(500);
   return res_ok;
 };
 
@@ -70,16 +69,16 @@ bool WiFi_test::test_server_over_HotSpot() {
   delete[] password;
   Serial.println("Test server over HotSpot: Enabled");
   delay(500);
-  res_ok = res_ok && Server_test::test_web_service();
+  Server_test::test_web_service();
   delay(500);
   Serial.println("Test server over HotSpot: Disable");
   res_ok = res_ok && WiFi_ctrl::hotspot_disable();
   Serial.println("Test server over HotSpot: Disabled");
-  delay(500);
   if (res_ok) {
     Serial.println("\n** Test server over HotSpot: SUCCESS! **\n");
   } else {
     Serial.println("\n** Test server over HotSpot: Something went wrong! **\n");
   }
+  delay(500);
   return res_ok;
 };
