@@ -38,6 +38,7 @@ bool WiFi_test::test_wifi_modes() {
 };
 
 bool WiFi_test::test_eeprom() {
+  Serial.println("Test WiFi EEPROM: Reads and writes");
   return Eeprom_test::test_read_write();
 };
 
