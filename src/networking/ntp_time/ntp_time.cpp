@@ -20,7 +20,9 @@ bool NTP_time::enable() {
   Serial.println("NTP: Enabled.");
   ntpClient.begin();
   delay(200);
-  return get_NTP_time();
+  get_NTP_time();
+  delay(200);
+  return true;
 };
 
 bool NTP_time::get_NTP_time() {
