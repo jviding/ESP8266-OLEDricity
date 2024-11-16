@@ -10,10 +10,13 @@
 
 class Network_test {
 public:
+
+  static bool test_WiFi_reset_sequence();
+
   // HTTPS
   static void test_get_and_print_price_data();
   // NTP
-  static void get_and_print_time();
+  static void test_get_and_print_time();
   // WIFI
   static bool test_wifi_modes();
   static bool test_wifi_eeprom();
