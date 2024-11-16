@@ -1,12 +1,15 @@
 #pragma once
 
 #include <Arduino.h>
-#include "../displays/dataset.h"
+#include "../networking/networking.h"
+#include "networking/network_test.h"
 
 
 class Tests {
 public:
+  static void test();
   static void debug_print_heap();
-  static void print_time(int time_now);
-  static void print_price_data(price_data_t* data);
+
+private:
+  static void test_networking();
 };
