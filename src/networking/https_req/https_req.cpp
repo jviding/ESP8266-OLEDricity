@@ -4,9 +4,9 @@ HTTPClient HTTPS_req::https;
 BearSSL::WiFiClientSecure HTTPS_req::client;
 
 
-void HTTPS_req::enable() {
+void HTTPS_req::init() {
   client.setInsecure();
-  Serial.println("HTTPS: Enabled.");
+  Serial.println("HTTPS: Initialized.");
   Serial.println("HTTPS: Disabled certificate validation.");
 };
 
