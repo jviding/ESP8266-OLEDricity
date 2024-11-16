@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "networking/networking.h"
 #include "displays/displays.h"
-//#include "led/led.h"
+#include "led/led.h"
 //#include "time.h"
 
 #include "tests/tests.h"
@@ -37,46 +37,19 @@ void start_serial() {
 
 void setup() {
   start_serial();
+
+  Tests::test();
+
   //Led::init();
-  Displays::init();
-  Networking::enable();
+  //Displays::init();
+  //Networking::enable();
 };
 
 void loop() {
+  
+  //Led::run();
 
-  bool res_ok = true;
-
-  // Get time
-  int time_now = 0;
-  res_ok &= Networking::get_time(&time_now);
-  // Get data
-  price_data_t* data = nullptr;
-  res_ok &= Networking::get_data(&data);
- 
-  while (res_ok) {
-    // Draw
-    res_ok = Displays::draw(data, time_now) == 1;
-    // Wait until hour changes
-    //time_now = new_time
-
-    if (time_now % 23 == 0) {
-      time_now += 100;
-      time_now /= 100;
-    } else {
-      time_now++;
-    }
-
-    if (res_ok != 0) {
-      res_ok = true;
-    }
-
-    delay(2000);
-  }
-
-  // TESTS
-  //Tests::print_time(time_now);
-  //Tests::print_price_data(data);
-  Tests::debug_print_heap();
+  //delay(1000);
 
   // LEDS
   /*delay(500);
@@ -94,17 +67,14 @@ void loop() {
   // Return 1/2 of time until hour change?
   // Avoid too small values, set limits
 
+  // Disconnect after data, to free memory for PWM
+
   // New data only when prev ends!
  
   // Then disconnect WiFI for 12h or so
   // If this fails, retry and x2 the wait if fails
   // Show error on screen?
 
-  while (data != nullptr) {
-    price_data_t* temp = data->next;
-    delete data;
-    data = temp;
-  }
-
-  delay(2000);
+  
+  
 };
