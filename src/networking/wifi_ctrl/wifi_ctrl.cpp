@@ -8,31 +8,60 @@ bool WiFi_ctrl::init() {
   Serial.println("WiFi: Initializing...");
   Eeprom_ctrl::init();
   Server_ctrl::init();
-  if (Eeprom_ctrl::read_SSID_and_password(&SSID, &PWD)) {
-    return true;
+  if (!Eeprom_ctrl::read_SSID_and_password(&SSID, &PWD)) {
+    Serial.println("WiFi: Failed.");
+    return false;
   }
-  Serial.println("WiFi: Failed.");
-  return false;
+  return true;
 };
 
 bool WiFi_ctrl::is_connected() {
   return WiFi.status() == WL_CONNECTED;
 };
 
-void WiFi_ctrl::connect() {
+bool WiFi_ctrl::is_connecting() {
+  switch(WiFi.status()) {
+    case WL_NO_SSID_AVAIL:
+      Serial.println("\nWiFi: SSID not available, incorrect?");
+      return false;
+    case WL_CONNECT_FAILED:
+      Serial.println("\nWiFi: Connection failed, incorrect password?");
+      return false;
+    case WL_IDLE_STATUS:
+      Serial.println("\nWiFi: WiFi module is idle.");
+      return false;
+    default:
+      return true;
+  }
+};
+
+bool WiFi_ctrl::try_connect() {
+  int time = 0;
+  if (!WiFi.mode(WIFI_STA)) {
+    Serial.println("WiFi: Something went wrong while trying to connect.");
+    return false;
+  }
+  Serial.print("WiFi: Connecting..");  
+  WiFi.begin(WIFI_SSID, WIFI_PWD);
+  while (!is_connected() && is_connecting() && time < 15) {
+    Serial.print(".");
+    delay(1000);
+    time++;
+  }
+  if (!is_connected()) return false;
+  Serial.println("Ok.");
+  return true;
+};
+
+bool WiFi_ctrl::connect() {
   if (is_connected()) {
     Serial.println("WiFi: Already connected.");
-  } else {
-    Serial.print("WiFi: Connecting..");
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(WIFI_SSID, WIFI_PWD);
-    while (is_connected() == false) {
-      Serial.print(".");
-      delay(1000);
-    }
-    Serial.println("Ok.");
+  } else if (!try_connect()) {
+    Serial.println("WiFi: Failed.");
+    return false;  
   }
   Serial.print("WiFi: IP address is "); Serial.println(WiFi.localIP());
+  return true;
 };
 
 bool WiFi_ctrl::disconnect() {
@@ -75,7 +104,7 @@ bool WiFi_ctrl::hotspot_enable(char** ip_address, char** password) {
     Serial.println("WiFi: HotSpot started.");
     Serial.println(" - Name: Electricube");
     Serial.print(" - Password: "); Serial.println(*password);
-    Serial.print(" - IP address:"); Serial.println(*ip_address);
+    Serial.print(" - IP address: "); Serial.println(*ip_address);
     return true;
   } else {
     Serial.println("WiFi: Failed.");
