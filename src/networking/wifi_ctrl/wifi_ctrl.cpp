@@ -42,7 +42,7 @@ bool WiFi_ctrl::try_connect() {
     return false;
   }
   Serial.print("WiFi: Connecting..");  
-  WiFi.begin(WIFI_SSID, WIFI_PWD);
+  WiFi.begin(SSID, PWD);
   while (!is_connected() && is_connecting() && time < 15) {
     Serial.print(".");
     delay(1000);
