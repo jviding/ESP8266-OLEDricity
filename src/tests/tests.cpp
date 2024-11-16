@@ -2,16 +2,17 @@
 
 
 void Tests::test() {
-  test_networking();
+  test_displays();
+  //test_leds();
+  //test_networking();
 };
 
 void Tests::test_displays() {
   Displays::init();
+  Displays_test::enable_networking_for_real_data();
   while (true) {
-    
-    // Banner
-    // Chart
-
+    // Test Displays (requires enable_networking_for_real_data)
+    Displays_test::test_displays_with_data_fast_loop();
     /*
       MEMORY CHECK
     */
