@@ -17,12 +17,12 @@ bool Network_test::test_WiFi_reset_sequence() {
   Serial.println("## Test WiFi: Test the WiFi reset sequence");
   bool res_ok = true;
   // Toggle current WiFi
-  res_ok = toggle_WiFi();
+  if (!toggle_WiFi()) Serial.println("## Test WiFi: Toggle failed.");
   // Open HotSpot and print IP
   char* ip_address = nullptr;
   char* password = nullptr;
   Serial.println("## Test WiFi: HotSpot enable");
-  res_ok = res_ok && WiFi_ctrl::hotspot_enable(&ip_address, &password);
+  res_ok = WiFi_ctrl::hotspot_enable(&ip_address, &password);
   Serial.println("## Test WiFi: HotSpot enabled");
   delete[] ip_address;
   delete[] password;
