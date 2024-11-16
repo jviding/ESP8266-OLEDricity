@@ -36,7 +36,10 @@ void WiFi_ctrl::connect() {
 };
 
 bool WiFi_ctrl::disconnect() {
-  if (WiFi.disconnect()) {
+  if (!is_connected()) {
+    Serial.println("WiFi: Already disconnected.");
+    return true;
+  } else if (WiFi.disconnect()) {
     Serial.println("WiFi: Disconnected.");
     return true;
   } else {
