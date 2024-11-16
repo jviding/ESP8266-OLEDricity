@@ -51,6 +51,7 @@ bool Eeprom_ctrl::read_SSID_and_password(char** ssid, char** password) {
   len = read_string_from_eeprom(password, addr);
   if (len == -1) {
     delete[] *ssid;
+    *ssid = nullptr;
     return false;
   }
   Serial.println("EEPROM: Password ok.");
