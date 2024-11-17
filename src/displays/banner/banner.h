@@ -31,5 +31,5 @@ private:
   static void draw_price(int price_x100);
 
   // MESSAGES
-  static int get_X_offset_to_center_text(const char* text);
+  static int get_X_offset_to_center_text(char* text);
 };
