@@ -31,17 +31,19 @@ void Displays_test::test_displays_with_data_fast_loop() {
 };
 
 bool Displays_test::enable_networking_for_real_data() {
-  char* ip_address = nullptr;
+  char* name = new char[12]{'E','l','e','c','t','r','i','c','u','b','e','\0'};
   char* password = nullptr;
+  char* ip_address = nullptr;
   bool res_ok = true;
   if (!Networking::enable()) {
     Serial.println("## Test Displays: Set WiFi credentials.");
-    res_ok = Networking::hotspot_enable(&ip_address, &password);
+    res_ok = Networking::hotspot_enable(name, &password, &ip_address);
     res_ok = res_ok && Networking::set_WiFi_SSID_and_password();
     res_ok = res_ok && Networking::hotspot_disable();
   }
-  delete[] ip_address;
+  delete[] name;
   delete[] password;
+  delete[] ip_address;
   if (!res_ok) {
     Serial.println("## Test Displays: Failed enabling real data use");
     delay(500);

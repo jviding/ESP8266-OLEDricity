@@ -19,13 +19,15 @@ bool Network_test::test_WiFi_reset_sequence() {
   // Toggle current WiFi
   if (!toggle_WiFi()) Serial.println("## Test WiFi: Toggle failed.");
   // Open HotSpot and print IP
-  char* ip_address = nullptr;
+  char* name = new char[12]{'E','l','e','c','t','r','i','c','u','b','e','\0'};
   char* password = nullptr;
+  char* ip_address = nullptr;
   Serial.println("## Test WiFi: HotSpot enable");
-  res_ok = WiFi_ctrl::hotspot_enable(&ip_address, &password);
+  res_ok = WiFi_ctrl::hotspot_enable(name, &password, &ip_address);
   Serial.println("## Test WiFi: HotSpot enabled");
-  delete[] ip_address;
+  delete[] name;
   delete[] password;
+  delete[] ip_address;
   delay(500);
   // Get new WiFi credentials
   Serial.println("## Test WiFi: New WiFi credentials, get");

@@ -12,12 +12,14 @@ bool WiFi_test::toggle_wifi() {
 
 bool WiFi_test::toggle_hotspot() {
   Serial.println("Test WiFi: Toggle HotSpot");
-  char* ip = nullptr;
+  char* name = new char[12]{'E','l','e','c','t','r','i','c','u','b','e','\0'};
   char* pwd = nullptr;
-  bool res_ok = WiFi_ctrl::hotspot_enable(&ip, &pwd);
+  char* ip = nullptr;
+  bool res_ok = WiFi_ctrl::hotspot_enable(name, &pwd, &ip);
   delay(500);
-  delete[] ip;
+  delete[] name;
   delete[] pwd;
+  delete[] ip;
   res_ok = res_ok && WiFi_ctrl::hotspot_disable();
   delay(500);
   return res_ok;
@@ -63,11 +65,14 @@ bool WiFi_test::test_server_over_WiFi() {
 
 bool WiFi_test::test_server_over_HotSpot() {
   bool res_ok = true;
+  char* name = new char[12]{'E','l','e','c','t','r','i','c','u','b','e','\0'};
+  char* password = nullptr;
   char* ip_address = nullptr;
   Serial.println("Test server over HotSpot: Enable");
-  char* password = nullptr;
-  res_ok = res_ok && WiFi_ctrl::hotspot_enable(&ip_address, &password);
+  res_ok = res_ok && WiFi_ctrl::hotspot_enable(name, &password, &ip_address);
+  delete[] name;
   delete[] password;
+  delete[] ip_address;
   Serial.println("Test server over HotSpot: Enabled");
   delay(500);
   Server_test::test_web_service();
