@@ -15,7 +15,7 @@ public:
   static bool init();
   static bool connect();
   static bool disconnect();
-  static bool hotspot_enable(char** ip_address, char** password);
+  static bool hotspot_enable(char* name, char** password, char** ip_address);
   static bool hotspot_disable();
   static bool set_WiFi_SSID_and_password();
 

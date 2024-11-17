@@ -92,13 +92,13 @@ void WiFi_ctrl::ip_address_to_str(IPAddress IP, char** ip_address) {
   strcpy(*ip_address, IP.toString().c_str());
 };
 
-bool WiFi_ctrl::hotspot_enable(char** ip_address, char** password) {
+bool WiFi_ctrl::hotspot_enable(char* name, char** password, char** ip_address) {
   Serial.println("WiFi: HotSpot starting...");
   // Create password  
   generate_random_8_digit_password(password);
   // Open HotSpot
   WiFi.mode(WIFI_AP);
-  if (WiFi.softAP("Electricube", *password)) {
+  if (WiFi.softAP(name, *password)) {
     IPAddress IP = WiFi.softAPIP();
     ip_address_to_str(IP, ip_address);
     Serial.println("WiFi: HotSpot started.");

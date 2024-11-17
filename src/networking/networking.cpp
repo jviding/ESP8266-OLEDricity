@@ -20,9 +20,9 @@ bool Networking::disconnect() {
   return print_result(WiFi_ctrl::disconnect());
 };
 
-bool Networking::hotspot_enable(char** ip_address, char** password) {
+bool Networking::hotspot_enable(char* name, char** password, char** ip_address) {
   Serial.println("Network: HotSpot enable.");
-  return print_result(WiFi_ctrl::hotspot_enable(ip_address, password)); 
+  return print_result(WiFi_ctrl::hotspot_enable(name, password, ip_address)); 
 };
 
 bool Networking::hotspot_disable() {
