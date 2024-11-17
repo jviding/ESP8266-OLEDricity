@@ -48,3 +48,7 @@ bool Displays_test::enable_networking_for_real_data() {
   }
   return res_ok;
 };
+
+void Displays_test::test_chart_write_hotspot_ip_and_pwd() {
+  Chart_test::test_write_hotspot_ip_and_pwd();
+};
