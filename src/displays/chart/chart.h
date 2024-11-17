@@ -21,6 +21,9 @@ public:
   static void init();
   static void draw(dataset_t* dataset);
 
+  // MESSAGES
+  static void write_hotspot_message(char* name, char* password, char* ip_address);
+
 private:
   // Variables
   static U8G2_SH1106_128X64_NONAME_F_HW_I2C display;
@@ -36,4 +39,7 @@ private:
   static void draw_X_label(int hour, int x_offset);
   static void draw_pillars(dataset_t* dataset, int price_max);
   static void draw_Y_line_horizontal(int price_y_max);
+
+  // MESSAGES
+  static int get_X_offset_to_center_text(char* text);
 };

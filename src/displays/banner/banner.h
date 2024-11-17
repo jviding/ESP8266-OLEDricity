@@ -16,6 +16,9 @@ public:
   static void power_down();
   static void draw(int price_x100);
 
+  // MESSAGES
+  static void write_hotspot_message();
+
 private:
   // Variables
   static U8G2_SH1106_128X32_VISIONOX_F_HW_I2C display;
@@ -26,4 +29,7 @@ private:
   static char int_to_char(int val);
   static void price_x100_to_str(char** str, int price_x100);
   static void draw_price(int price_x100);
+
+  // MESSAGES
+  static int get_X_offset_to_center_text(char* text);
 };

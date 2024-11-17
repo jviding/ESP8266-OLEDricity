@@ -18,6 +18,7 @@ public:
   // Functions
   static void init();
   static int draw(price_data_t* price_data, int time_now);
+  static void chart_write_hotspot_messages(char* name, char* password, char* ip_address);
 
 private:
   // Functions

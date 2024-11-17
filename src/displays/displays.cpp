@@ -67,3 +67,12 @@ int Displays::draw(price_data_t* price_data, int time_now) {
   delete dataset;
   return res_ok;
 };
+
+void Displays::chart_write_hotspot_messages(char* name, char* password, char* ip_address) {
+  pin_high(PIN_CHART);
+  Chart::write_hotspot_message(name, password, ip_address);
+  pin_low(PIN_CHART);
+  pin_high(PIN_BANNER);
+  Banner::write_hotspot_message();
+  pin_low(PIN_BANNER);
+};
