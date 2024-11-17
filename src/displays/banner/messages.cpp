@@ -1,7 +1,7 @@
 #include "banner.h"
 
 
-int Banner::get_X_offset_to_center_text(char* text) {
+int Banner::get_X_offset_to_center_text(const char* text) {
   return (X_BANNER_MAX - display.getUTF8Width(text)) / 2;
 };
 
