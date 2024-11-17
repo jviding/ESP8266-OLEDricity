@@ -9,10 +9,12 @@ void Tests::test() {
 
 void Tests::test_displays() {
   Displays::init();
-  Displays_test::enable_networking_for_real_data();
+  //Displays_test::enable_networking_for_real_data();
   while (true) {
     // Test Displays (requires enable_networking_for_real_data)
-    Displays_test::test_displays_with_data_fast_loop();
+    //Displays_test::test_displays_with_data_fast_loop();
+    // CHART
+    Displays_test::test_chart_write_hotspot_ip_and_pwd();
     /*
       MEMORY CHECK
     */
