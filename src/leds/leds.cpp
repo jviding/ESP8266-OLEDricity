@@ -2,51 +2,26 @@
 
 
 // analogWrite(pin, value);
-// Val 255 = 1
-// Val 0   = 0
+// Max: 255 = 1
+// Min: 0   = 0
 
 void Leds::init() {
-  Serial.print("Initializing GPIO for Led...");
-  // Enable
-  pinMode(LED_BLUE,   OUTPUT);
-  pinMode(LED_GREEN,  OUTPUT);
-  pinMode(LED_YELLOW, OUTPUT);
+  Serial.print("Initializing GPIO for Leds...");
+  // Enable RGB
   pinMode(LED_RED,    OUTPUT);
-  // Default Low
-
+  pinMode(LED_GREEN,  OUTPUT);
+  pinMode(LED_BLUE,   OUTPUT);
   delay(100);
+  // Default Low
   set_all_low();
   Serial.print("Ok.");
 };
 
 void Leds::set_all_low() {
-  digitalWrite(LED_BLUE,   LOW);
-  digitalWrite(LED_GREEN,  LOW);
-  digitalWrite(LED_YELLOW, LOW);
   digitalWrite(LED_RED,    LOW);
+  digitalWrite(LED_GREEN,  LOW);
+  digitalWrite(LED_BLUE,   LOW);  
   delay(100);
-};
-
-void Leds::set_one_high(uint8_t pin) {
-  set_all_low();
-  digitalWrite(pin, HIGH);
-  delay(100);
-};
-
-void Leds::blue() {
-  set_one_high(LED_BLUE);
-};
-
-void Leds::green() {
-  set_one_high(LED_GREEN);
-};
-
-void Leds::yellow() {
-  set_one_high(LED_YELLOW);
-};
-
-void Leds::red() {
-  set_one_high(LED_RED);
 };
 
 void Leds::to_high(int pin) {
@@ -66,31 +41,20 @@ void Leds::to_low(int pin) {
 void Leds::shine(int red, int green, int blue) {
   analogWrite(LED_RED, red);
   analogWrite(LED_GREEN, green);
-  analogWrite(LED_YELLOW, blue);
+  analogWrite(LED_BLUE, blue);
   //delay(1000);
 };
 
 void Leds::run() {
 
     // Find orange
-    shine(0, 255, 0);
+    /*shine(0, 255, 0);
     for (int i = 0; i <= 255; i++) {
       shine(i, 255, 0);
       delay(50);
     }
 
-    /*// Start Green
-    shine(0, 255, 0);
-
-    // Green to Blue
-    to_high(LED_YELLOW);
-    to_low(LED_GREEN);
-    // Blue to Red
-    to_high(LED_RED);
-    to_low(LED_YELLOW);
-    // Red to Green
-    to_high(LED_GREEN);
-    to_low(LED_RED);
+    
 
     Serial.println("Now GREEN");
 
