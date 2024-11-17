@@ -6,6 +6,7 @@
 #include "../networking/networking.h"
 #include "networking/network_test.h"
 #include "displays/displays_test.h"
+#include "leds/leds_test.h"
 
 
 class Tests {
