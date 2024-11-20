@@ -13,17 +13,13 @@ bool Network_test::toggle_WiFi() {
   return res_ok;
 };
 
-bool Network_test::test_WiFi_reset_sequence() {
-  Serial.println("## Test WiFi: Test the WiFi reset sequence");
-  bool res_ok = true;
-  // Toggle current WiFi
-  if (!toggle_WiFi()) Serial.println("## Test WiFi: Toggle failed.");
-  // Open HotSpot and print IP
+bool Network_test::test_WiFi_reset() {
   char* name = new char[12]{'E','l','e','c','t','r','i','c','u','b','e','\0'};
   char* password = nullptr;
   char* ip_address = nullptr;
+  // Open HotSpot and print IP
   Serial.println("## Test WiFi: HotSpot enable");
-  res_ok = WiFi_ctrl::hotspot_enable(name, &password, &ip_address);
+  bool res_ok = WiFi_ctrl::hotspot_enable(name, &password, &ip_address);
   Serial.println("## Test WiFi: HotSpot enabled");
   delete[] name;
   delete[] password;
@@ -39,6 +35,16 @@ bool Network_test::test_WiFi_reset_sequence() {
   res_ok = res_ok && WiFi_ctrl::hotspot_disable();
   Serial.println("## Test WiFi: HotSpot disabled");
   delay(500);
+  return res_ok;
+};
+
+bool Network_test::test_WiFi_reset_then_join() {
+  Serial.println("## Test WiFi: Test the WiFi reset sequence");
+  bool res_ok = true;
+  // Toggle current WiFi
+  if (!toggle_WiFi()) Serial.println("## Test WiFi: Toggle failed.");
+  // Set new WiFi
+  res_ok = test_WiFi_reset();
   // Toggle new WiFi
   res_ok = res_ok && toggle_WiFi();
   Serial.println("\n## Test  WiFi: COMPLETED");

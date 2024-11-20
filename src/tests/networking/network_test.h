@@ -11,7 +11,8 @@
 class Network_test {
 public:
 
-  static bool test_WiFi_reset_sequence();
+  static bool test_WiFi_reset();
+  static bool test_WiFi_reset_then_join();
 
   // HTTPS
   static void test_get_and_print_price_data();
