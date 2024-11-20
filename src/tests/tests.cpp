@@ -2,13 +2,11 @@
 
 
 void Tests::test() {
-  // Enable
-  Leds::init();
-  //Displays::init();
+  // ENABLE
+  Displays::init();
   //Networking::enable();
-  // Then, test
-  //test_displays();
-  test_leds();
+  // TEST
+  test_displays();
   //test_networking();
 };
 
@@ -19,18 +17,9 @@ void Tests::test_displays() {
     // Test Displays (requires enable_networking_for_real_data)
     //Displays_test::test_displays_with_data_fast_loop();
     // CHART
-    Displays_test::test_chart_write_hotspot_ip_and_pwd();
-    /*
-      MEMORY CHECK
-    */
-    debug_print_heap();
-    delay(3000);
-  }
-};
-
-void Tests::test_leds() {
-  while (true) {
-    Leds_test::run_colors();
+    //Displays_test::test_chart_write_hotspot_ip_and_pwd();
+    // LEDS
+    Displays_test::test_leds_rgb();
     /*
       MEMORY CHECK
     */

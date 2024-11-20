@@ -54,3 +54,7 @@ bool Displays_test::enable_networking_for_real_data() {
 void Displays_test::test_chart_write_hotspot_ip_and_pwd() {
   Chart_test::test_write_hotspot_ip_and_pwd();
 };
+
+void Displays_test::test_leds_rgb() {
+  Leds_test::test_rgb();
+};

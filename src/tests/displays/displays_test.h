@@ -5,6 +5,7 @@
 #include "../../networking/networking.h"
 
 #include "chart/chart_test.h"
+#include "leds/leds_test.h"
 
 
 class Displays_test {
@@ -14,4 +15,7 @@ public:
 
   // CHART
   static void test_chart_write_hotspot_ip_and_pwd();
+
+  // LEDS
+  static void test_leds_rgb();
 };
