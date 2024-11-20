@@ -1,4 +1,5 @@
 #pragma once
+
 #include <Arduino.h>
 
 
@@ -24,8 +25,6 @@ public:
   // Functions
   static void init();
   static void glow(int price);
-
-  static void shine(int red, int green, int blue);
 
 private:
   // Functions

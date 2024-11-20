@@ -17,12 +17,6 @@ void Leds::init() {
   Serial.print("Ok.");
 };
 
-void Leds::shine(int red, int green, int blue) {
-  analogWrite(LED_RED,    red);
-  analogWrite(LED_GREEN,  green);
-  analogWrite(LED_BLUE,   blue);
-};
-
 void Leds::set_rgb_color(int red, int green, int blue) {
   analogWrite(LED_RED,    red);
   analogWrite(LED_GREEN,  green);
