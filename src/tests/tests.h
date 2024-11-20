@@ -15,4 +15,5 @@ public:
 private:
   static void test_displays();
   static void test_networking();
+  static void test_both();
 };
