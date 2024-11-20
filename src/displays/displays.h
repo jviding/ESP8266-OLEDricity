@@ -2,7 +2,8 @@
 
 #include "banner/banner.h"
 #include "chart/chart.h"
-#include "dataset.h"
+#include "dataset/dataset.h"
+#include "leds/leds.h"
 
 #define GPIO_14   14
 #define GPIO_16   16

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../networking/netStructs.h"
+#include "../../networking/netStructs.h"
 
 struct dataset_t {
   int size;

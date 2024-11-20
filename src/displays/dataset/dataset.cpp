@@ -1,7 +1,7 @@
-#include "displays.h"
+#include "dataset.h"
 
 
-bool Displays::set_ptr_to_data_now(dataset_t* dataset, price_data_t* data, int time_now) {
+bool Dataset::set_ptr_to_data_now(dataset_t* dataset, price_data_t* data, int time_now) {
   while (data != nullptr) {
     if (data->time == time_now) {
       dataset->time_now = time_now;
@@ -15,7 +15,7 @@ bool Displays::set_ptr_to_data_now(dataset_t* dataset, price_data_t* data, int t
   return false;
 };
 
-void Displays::try_shift_data_ptr_one_left(dataset_t* dataset) {
+void Dataset::try_shift_data_ptr_one_left(dataset_t* dataset) {
   if ((dataset->price_data)->prev != nullptr) {
     dataset->price_data = (dataset->price_data)->prev;
     return;
@@ -23,7 +23,7 @@ void Displays::try_shift_data_ptr_one_left(dataset_t* dataset) {
   Serial.println("Dataset: Failed shifting dataset ptr one left.");
 };
 
-bool Displays::set_price_max(dataset_t* dataset, int dataset_size) {
+bool Dataset::set_price_max(dataset_t* dataset, int dataset_size) {
   int val = 0;
   bool res_ok = true;
   price_data_t* temp = dataset->price_data;
@@ -46,9 +46,9 @@ bool Displays::set_price_max(dataset_t* dataset, int dataset_size) {
 // Return 0: No data matching time_now
 // Return 1: Success
 // Return 2: Success, but with dataset unexpected EOF
-int Displays::create_dataset(dataset_t** dataset, price_data_t* data, int time_now) {
+int Dataset::create_dataset(dataset_t** dataset, int dataset_size, price_data_t* data, int time_now) {
   if (!set_ptr_to_data_now(*dataset, data, time_now)) return 0;
   try_shift_data_ptr_one_left(*dataset);
-  if (!set_price_max(*dataset, CHART_PILLARS_NUM)) return 2;
+  if (!set_price_max(*dataset, dataset_size)) return 2;
   return 1;
 };
