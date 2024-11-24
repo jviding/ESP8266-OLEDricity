@@ -13,7 +13,7 @@ public:
   static void test_data_fast_loop(price_data_t* data, int time_now);
 
   // CHART
-  static void test_chart_write_hotspot_ip_and_pwd();
+  static void test_chart_hotspot_message();
 
   // LEDS
   static void test_leds_rgb();

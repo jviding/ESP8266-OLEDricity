@@ -5,5 +5,5 @@
 
 class Chart_test {
 public:
-  static void test_write_hotspot_ip_and_pwd();
+  static void test_write_hotspot_message();
 };

@@ -2,9 +2,9 @@
 
 
 void Tests::test() {
-  //test_displays();
+  test_displays();
   //test_networking();
-  test_both();
+  //test_both();
 };
 
 
@@ -12,9 +12,9 @@ void Tests::test_displays() {
   Displays::init();
   while (true) {
     // CHART
-    //Displays_test::test_chart_write_hotspot_ip_and_pwd();
+    Displays_test::test_chart_hotspot_message();
     // LEDS
-    Displays_test::test_leds_rgb();
+    //Displays_test::test_leds_rgb();
     /*
       MEMORY CHECK
     */
@@ -44,8 +44,6 @@ void Tests::test_networking() {
     delay(3000);
   }
 };
-
-
 
 void Tests::test_both() {
   // Enable
@@ -88,5 +86,3 @@ void Tests::debug_print_heap() {
   Serial.print("Free heap: "); Serial.println(heap);
   Serial.println("\n");
 };
-
-

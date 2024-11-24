@@ -1,6 +1,6 @@
 #include "chart_test.h"
 
-void Chart_test::test_write_hotspot_ip_and_pwd() {
+void Chart_test::test_write_hotspot_message() {
   Serial.println("## Test Display Chart: Write HotSpot IP and Password");
   char* name = new char[12]{'E','l','e','c','t','r','i','c','u','b','e','\0'};
   char* pwd = new char[9]{'8','8','8','8','8','8','8','8','\0'};

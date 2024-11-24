@@ -17,8 +17,8 @@ void Displays_test::test_data_fast_loop(price_data_t* data, int time_now) {
   }
 };
 
-void Displays_test::test_chart_write_hotspot_ip_and_pwd() {
-  Chart_test::test_write_hotspot_ip_and_pwd();
+void Displays_test::test_chart_hotspot_message() {
+  Chart_test::test_write_hotspot_message();
 };
 
 void Displays_test::test_leds_rgb() {
