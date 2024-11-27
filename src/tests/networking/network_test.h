@@ -18,6 +18,7 @@ public:
   static void test_get_and_print_price_data();
   // NTP
   static void test_get_and_print_time();
+  static void test_ntp_wait_until_hour_changed();
   // WIFI
   static bool test_wifi_modes();
   static bool test_wifi_eeprom();

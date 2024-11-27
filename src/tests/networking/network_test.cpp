@@ -78,3 +78,8 @@ bool Network_test::test_wifi_server_over_WiFi() {
 bool Network_test::test_wifi_server_over_HotSpot() {
   return WiFi_test::test_server_over_HotSpot();
 };
+
+void Network_test::test_ntp_wait_until_hour_changed() {
+  if (Networking::connect()) NTP_test::test_wait_until_hour_changed();
+  else Serial.println("## Test NTP wait: WiFi connection failed.");
+};

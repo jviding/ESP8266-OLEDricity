@@ -7,4 +7,5 @@
 class NTP_test {
 public:
   static void get_and_print_time();
+  static void test_wait_until_hour_changed();
 };

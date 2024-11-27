@@ -2,9 +2,9 @@
 
 
 void Tests::test() {
-  test_displays();
+  //test_displays();
   //test_networking();
-  //test_both();
+  test_both();
 };
 
 
@@ -27,11 +27,12 @@ void Tests::test_networking() {
   Networking::enable();
   while (true) {
     // Reset sequence
-    Network_test::test_WiFi_reset_then_join();
+    //Network_test::test_WiFi_reset_then_join();
     // HTTPS
     //Network_test::test_get_and_print_price_data();
     // NTP
     //Network_test::test_get_and_print_time();
+    Network_test::test_ntp_wait_until_hour_changed();
     // WIFI
     //Network_test::test_wifi_modes();
     //Network_test::test_wifi_eeprom();
