@@ -31,6 +31,7 @@ public:
 
   static bool get_data(price_data_t** data);
   static bool get_time(int* time);
+  static bool wait_until_hour_changed(int time);
 
 private:
   // Functions
