@@ -7,9 +7,9 @@
 #define GPIO_13  13
 #define GPIO_15  15
 
-#define LED_RED     GPIO_0
-#define LED_GREEN   GPIO_13
-#define LED_BLUE    GPIO_15
+#define LED_RED     GPIO_0  // D3
+#define LED_GREEN   GPIO_13 // D7
+#define LED_BLUE    GPIO_15 // D8
 
 // RGB colors
 // Min: 0
