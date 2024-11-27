@@ -56,7 +56,7 @@ ESP8266:
 - pinBanner = D5 / GPIO14
 - pinChart  = D0 / GPIO16
 3) Led ctrl
-- red   = D6 / GPIO0
+- red   = D3 / GPIO0
 - green = D7 / GPIO13
 - blue  = D8 / GPIO15
 4) Button
@@ -79,6 +79,9 @@ ToDo:
 - Check Banner shows negative prices correct
 - Show HotSpot IP and Pwd on screen
 - POST response, layout?
+- Hello message on Start
+- Disconnect from WiFi for duration of wait
+- WiFi SSID from config file
 
 Ideas:
 - Chart: Follow actual price with the Y-horizontal?
