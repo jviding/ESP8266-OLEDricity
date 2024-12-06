@@ -12,9 +12,9 @@ void Tests::test_displays() {
   Displays::init();
   while (true) {
     // CHART
-    Displays_test::test_chart_hotspot_message();
+    //Displays_test::test_chart_hotspot_message();
     // LEDS
-    //Displays_test::test_leds_rgb();
+    Displays_test::test_leds_rgb();
     /*
       MEMORY CHECK
     */
@@ -63,10 +63,7 @@ void Tests::test_both() {
     price_data_t* data = nullptr;
     res_ok = res_ok && Networking::get_data(&data);
     // Fast loop
-    while (res_ok) {
-      Displays_test::test_data_fast_loop(data, time_now);
-      delay(1000);
-    }
+    Displays_test::test_data_fast_loop(data, time_now);
     // Release
     while (data != nullptr) {
       price_data_t* temp = data->next;

@@ -5,6 +5,6 @@ void Leds_test::test_rgb() {
   Serial.println("## Test Leds: Run colors through");
   for (int i = 1; i < 22; i += 2) {
     Leds::glow(i);
-    delay(1000);
+    delay(500);
   }
 };
