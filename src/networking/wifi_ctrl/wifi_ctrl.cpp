@@ -127,10 +127,10 @@ bool WiFi_ctrl::set_WiFi_SSID_and_password() {
   if (SSID != nullptr) delete[] SSID;
   if (PWD != nullptr) delete[] PWD;
   bool res_ok = true;
-  // Clear old
-  res_ok = res_ok && Eeprom_ctrl::clear_SSID_and_password();
   // Get new
   Server_ctrl::run(&SSID, &PWD);
+  // Clear old
+  res_ok = res_ok && Eeprom_ctrl::clear_SSID_and_password();
   // Write to memory
   res_ok = res_ok && Eeprom_ctrl::write_SSID_and_password(SSID, PWD);
   delay(1000);
