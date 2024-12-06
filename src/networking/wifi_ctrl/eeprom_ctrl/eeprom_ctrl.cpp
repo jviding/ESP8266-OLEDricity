@@ -9,7 +9,10 @@ void Eeprom_ctrl::init() {
 bool Eeprom_ctrl::clear_SSID_and_password() {
   Serial.println("EEPROM: Clearing SSID and Password.");
   EEPROM.write(INIT_ADDR, 0x00);
-  if (EEPROM.commit()) return true;
+  if (EEPROM.commit()) {
+    delay(100);
+    return true;
+  }
   Serial.println("EEPROM: Failed committing changes.");
   return false;
 };
@@ -96,9 +99,10 @@ bool Eeprom_ctrl::write_SSID_and_password(char* ssid, char* password) {
   // Write OK
   EEPROM.write(INIT_ADDR, INIT_VAL);
   // Commit changes
-  if (!EEPROM.commit()) {
-    Serial.println("EEPROM: Failed committing changes.");
-    return false;
+  if (EEPROM.commit()) {
+    delay(100);
+    return true;
   }
-  return true;
+  Serial.println("EEPROM: Failed committing changes.");
+  return false;
 };
