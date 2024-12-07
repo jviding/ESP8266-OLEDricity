@@ -66,31 +66,17 @@ bool NTP_time::get_finnish_time_as_data_time(int* time_now) {
 };
 
 bool NTP_time::wait_until_hour_changed(int time_now) {
-
-  int minutes = 0;
-
   while (true) {
     // Get new time
     time_t time_new = 0;
     if (!get_finnish_time(&time_new)) return false;
     // Check if hour changed
     if (hour(time_new) != time_now % 100) return true;
-    
-    // TEST
-    if (minute(time_new) != minutes) {
-      minutes = minute(time_new);
-      Serial.print("NTP: MINUTE CHANGED TO ");
-      Serial.println(minutes);
-    }
-    
     // If not, wait...
     int wait_time = 0;
-    //wait_time += (59 - minute(time_new)) * 60; // Add minutes as seconds
+    wait_time += (59 - minute(time_new)) * 60; // Add minutes as seconds
     wait_time += (59 - second(time_new));      // Add seconds
-    // ...for at least 3 seconds.
-    if (wait_time < 3) wait_time = 3;
     // Wait
-    delay(wait_time * 1000);
-
+    delay((wait_time + 1) * 1000); // +1 for offset and ensures >0
   }
 };

@@ -42,11 +42,6 @@ bool Networking::get_time(int* time_now) {
 
 bool Networking::wait_until_hour_changed(int time_now) {
   Serial.println("Network: Wait until hour changed.");
-
-  // Connect, get time, disconnect
-  // If hour changed, return
-  // If not, calc wait time, disconnect, and wait
-
   return print_result(WiFi_ctrl::connect() && NTP_time::wait_until_hour_changed(time_now));
 }
 
