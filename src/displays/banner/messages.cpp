@@ -5,8 +5,8 @@ int Banner::get_X_offset_to_center_text(char* text) {
   return (X_BANNER_MAX - display.getUTF8Width(text)) / 2;
 };
 
-void Banner::write_hotspot_message() {
-  Serial.print("Banner: Writing...");
+void Banner::message_write_brand() {
+  Serial.print("Banner: Writing brand...");
   // Prepare
   display.setDisplayRotation(U8G2_R2);
   display.clearBuffer();

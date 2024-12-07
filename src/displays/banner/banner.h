@@ -17,7 +17,7 @@ public:
   static void draw(int price_x100);
 
   // MESSAGES
-  static void write_hotspot_message();
+  static void message_write_brand();
 
 private:
   // Variables
