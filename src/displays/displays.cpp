@@ -77,12 +77,5 @@ void Displays::chart_write_hotspot_messages(char* name, char* password, char* ip
   pin_low(PIN_CHART);
   pin_high(PIN_BANNER);
   Banner::write_brand_message();
-  
-  Serial.println("Before");
-  delay(1500);
-  
   pin_low(PIN_BANNER);
-
-  Serial.println("After");
-  delay(1500);
 };
