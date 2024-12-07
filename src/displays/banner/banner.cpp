@@ -8,7 +8,7 @@ void Banner::init() {
   display.begin();
   Serial.println("Ok.");
   delay(250);
-  message_write_brand();
+  write_brand_message();
 };
 
 void Banner::power_up() {

@@ -76,6 +76,6 @@ void Displays::chart_write_hotspot_messages(char* name, char* password, char* ip
   Chart::write_hotspot_message(name, password, ip_address);
   pin_low(PIN_CHART);
   pin_high(PIN_BANNER);
-  Banner::write_hotspot_message();
+  Banner::write_brand_message();
   pin_low(PIN_BANNER);
 };

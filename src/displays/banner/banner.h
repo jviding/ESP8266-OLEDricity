@@ -17,7 +17,7 @@ public:
   static void draw(int price_x100);
 
   // MESSAGES
-  static void message_write_brand();
+  static void write_brand_message();
 
 private:
   // Variables
