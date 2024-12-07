@@ -3,15 +3,17 @@ Show electricity prices with 1.3" OLED display.
 
 ## Components
 
-1) 1.3" OLED display, 64x128
-2) 0.91" OLED display, 32x128
-3) ESP8266-12E
+1) ESP8266-12E
+2) 1.3" OLED display, 64x128
+3) 0.91" OLED display, 32x128
 4) 4x RGB led, common cathode
 5) AMS1117 3.3V
-6) 2x MOSFET, 2N7000
-7) Resistors, 10k ohm, 100ohm
-8) Prototype board, wires, button
-9) USB breakout, with Vcc + GND
+6) 5x MOSFET, 2N7000
+7) Caps (100uF elec, 10uF tantal)
+8) Resistors, 10k ohm, 100ohm
+9) USB breakout, with Vcc & GND
+10) Prototype board, wires, connectors
+11) Button
 
 ## Find RPi
 
@@ -77,16 +79,13 @@ Tested with 2N700 during development.
 ToDo:
 - Enable joining a WiFi that is not password protected
 - Check Banner shows negative prices correct
-- Show HotSpot IP and Pwd on screen
 - POST response, layout?
-- Hello message on Start
 - Disconnect from WiFi for duration of wait
-- WiFi SSID from config file
 
 Ideas:
 - Chart: Follow actual price with the Y-horizontal?
 - Banner: Toggle Day Average, time now, or similar?
-- Use error codes on displays?
+- Show errors and/or codes on displays?
 - Allow changing API endpoint? (Store to EEPROM)
 - Enable software updates, from remote?
 
