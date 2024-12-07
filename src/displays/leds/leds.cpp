@@ -2,7 +2,7 @@
 
 
 void Leds::init() {
-  Serial.print("Leds: Initializing GPIO for RGB control...");
+  Serial.print("Leds: Initializing GPIO...");
   // Enable pins
   pinMode(LED_RED,    OUTPUT);
   pinMode(LED_GREEN,  OUTPUT);
@@ -16,7 +16,7 @@ void Leds::init() {
   // Glow blue
   set_rgb_color(0, 0, 255);
   // Done
-  Serial.print("Ok.");
+  Serial.println("Ok.");
 };
 
 void Leds::set_rgb_color(int red, int green, int blue) {
