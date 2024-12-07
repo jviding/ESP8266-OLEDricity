@@ -1,31 +1,8 @@
 #include "Arduino.h"
 #include "networking/networking.h"
 #include "displays/displays.h"
-#include "leds/leds.h"
-//#include "time.h"
 
-#include "tests/tests.h"
-
- /* 
-  * IDEAS
-  * - Show price Now and Day Average?
-  * - Follow actual price with mid line?
-  * - Use set address, and remove mosfets?
-  * 
-  * BUG/FIX
-  * - Pull-ups to display sclk
-  * 
-  * 
-  */
-
-// Allow WiFi without password!
-
-// Show negative price on Banner
-
-// Show error codes on display?
-// F.ex. create class Error, to store/read
-// Would help debugging exceptions
-// WiFi can freeze - add timeout and retry? (show error?)
+//#include "tests/tests.h"
 
 
 void start_serial() {
@@ -37,72 +14,75 @@ void start_serial() {
   Serial.println("Main: Serial started.");
 };
 
-bool set_wifi_credentials() {
+bool reset_wifi_credentials() {
   // Enable HotSpot
-  char* ip_address = nullptr;
   char* password = nullptr;
-  Networking::hotspot_enable(&ip_address, &password);
-  delete[] ip_address;
+  char* ip_address = nullptr;
+  Networking::hotspot_enable(CONFIG_HOTSPOT_NAME, &password, &ip_address);
+  Displays::chart_write_hotspot_messages(CONFIG_HOTSPOT_NAME, password, ip_address);
   delete[] password;
-
-  // Test these
-  Serial.println("MAIN: Write IP & PWD to display");
-  Serial.print(" - IP: "); Serial.println(ip_address);
-  Serial.print(" - PWD: "); Serial.println(password);
-
+  delete[] ip_address;
   // Set WiFi credentials
   Networking::set_WiFi_SSID_and_password();
   // Disable HotSpot
   Networking::hotspot_disable();
-
-  // Return error & show on display
+  // TODO: Return and show errors on display?
   return true;
 };
 
 void setup() {
   start_serial();
   // TEST
-  Tests::test();
+  //Tests::test();
   // PRODUCTION
-  //Led::init();
   Displays::init();
-  if (!Networking::enable()) { // BUTTON PRESS FOR RESET
-    set_wifi_credentials();
+  if (!Networking::enable()) { // TODO: Add Button press to reset?
+    reset_wifi_credentials();
   }
+  // TODO: Show errors on displays? Error codes or text?
+};
 
-  // Show errors on displays?
-  // Codes or text?
-
+void handle_errors(int code) {
+  Serial.print("Main: Error code: ");
+  Serial.println(code);
 };
 
 void loop() {
-  
-  //Led::run();
-
-  //delay(1000);
-
-  // LEDS
-  /*delay(500);
-  Led::blue();
-  delay(500);
-  Led::green();
-  delay(500);
-  Led::yellow();
-  delay(500);
-  Led::red();*/
-
-  // Wait 1h -> Draw next hour
-  // Wait 12h -> new data
-  // Function to compute delay?
-  // Return 1/2 of time until hour change?
-  // Avoid too small values, set limits
-
-  // Disconnect after data, to free memory for PWM
-
-  // New data only when prev ends!
- 
-  // Then disconnect WiFI for 12h or so
-  // If this fails, retry and x2 the wait if fails
-  // Show error on screen?
-
+  // Time & Data
+  int time_now = 0;
+  price_data_t* data = nullptr;
+  // Get data
+  if (!Networking::get_data(&data)) {
+    Serial.println("Main: Get data failed.");
+    handle_errors(2);
+    return;
+  }
+  // Loop until data EOF
+  while (true) {
+    // Get time
+    if (!Networking::get_time(&time_now)) {
+      Serial.println("Main: Get time failed.");
+      handle_errors(1);
+      break;
+    }
+    // Draw
+    int res_code = Displays::draw(data, time_now);
+    if (res_code == 0) {
+      Serial.println("Main: No data for time now.");
+      break;
+    }
+    // Wait until hour changed
+    Networking::wait_until_hour_changed(time_now);
+    // If EOF, break to get new data
+    if (res_code == 2) {
+      Serial.println("Main: Data EOF, reload.");
+      break;
+    }
+  }
+  // Free all memory
+  while (data != nullptr) {
+    price_data_t* temp = data->next;
+    delete data;
+    data = temp; 
+  }
 };
