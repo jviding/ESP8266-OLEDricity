@@ -22,6 +22,7 @@ public:
   static void draw(dataset_t* dataset);
 
   // MESSAGES
+  static void write_init_message();
   static void write_hotspot_message(char* name, char* password, char* ip_address);
 
 private:

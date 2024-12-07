@@ -7,6 +7,8 @@ void Chart::init() {
   Serial.print("Chart: Initializing...");
   display.begin();
   Serial.println("Ok.");
+  delay(250);
+  write_init_message();
 };
 
 int Chart::get_price_Y_max(int price_max) {
