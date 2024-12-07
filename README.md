@@ -51,18 +51,18 @@ Listen for Serial:
 ## Pins
 
 ESP8266:
-1) Wire / I2C
-- SCL = D1 / GPIO5
-- SDA = D2 / GPIO4
+1) I2C (Display comm.)
+- SCL = GPIO5 (D1)
+- SDA = GPIO4 (D2)
 2) Display ctrl
-- pinBanner = D5 / GPIO14
-- pinChart  = D0 / GPIO16
+- pinBanner = GPIO0 (D3)
+- pinChart  = GPIO2 (D4)
 3) Led ctrl
-- red   = D3 / GPIO0
-- green = D7 / GPIO13
-- blue  = D8 / GPIO15
+- red   = GPIO16 (D0)
+- green = GPIO14 (D5)
+- blue  = GPIO12 (D6)
 4) Button
-- button = D3 / GPIO12
+- button = GPIO13 (D7)
 
 Note 1: Connect display SCL to MOSFET drain.
 Master I2C transmits by pulling signal down.
