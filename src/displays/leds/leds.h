@@ -2,14 +2,13 @@
 
 #include <Arduino.h>
 
+#define GPIO_12  12
+#define GPIO_14  14
+#define GPIO_16  16
 
-#define GPIO_0   0
-#define GPIO_13  13
-#define GPIO_15  15
-
-#define LED_RED     GPIO_0  // D3
-#define LED_GREEN   GPIO_13 // D7
-#define LED_BLUE    GPIO_15 // D8
+#define LED_BLUE    GPIO_12 // D6
+#define LED_GREEN   GPIO_14 // D5
+#define LED_RED     GPIO_16 // D0
 
 // RGB colors
 // Min: 0

@@ -5,11 +5,11 @@
 #include "dataset/dataset.h"
 #include "leds/leds.h"
 
-#define GPIO_14   14
-#define GPIO_16   16
+#define GPIO_0   0
+#define GPIO_2   2
 
-#define PIN_BANNER  GPIO_14
-#define PIN_CHART   GPIO_16
+#define PIN_BANNER  GPIO_0  // D3
+#define PIN_CHART   GPIO_2  // D4
 
 #define CHART_PILLARS_NUM 19
 
