@@ -26,7 +26,6 @@ bool reset_wifi_credentials() {
   Networking::set_WiFi_SSID_and_password();
   // Disable HotSpot
   Networking::hotspot_disable();
-  // TODO: Return and show errors on display?
   return true;
 };
 
@@ -36,7 +35,8 @@ void setup() {
   //Tests::test();
   // PRODUCTION
   Displays::init();
-  if (!Networking::enable()) { // TODO: Add Button press to reset?
+  if (!Networking::enable() && !Networking::connect()) { 
+    // TODO: Add Button press to reset?
     reset_wifi_credentials();
   }
   // TODO: Show errors on displays? Error codes or text?
