@@ -10,10 +10,9 @@ Show electricity prices with 1.3" OLED display.
 5) AMS1117 3.3V
 6) 5x MOSFET, 2N7000
 7) Caps (100uF elec, 10uF tantal)
-8) Resistors, 10k ohm, 100ohm
-9) USB breakout, with Vcc & GND
-10) Prototype board, wires, connectors
-11) Button
+8) Resistors, 7x 10k ohm, 1x 100ohm
+9) Connectors: USB 2pin, JST 5pin, JST 4pin
+10) Prototype board, cables
 
 ## Find RPi
 
@@ -78,13 +77,13 @@ Tested with 2N700 during development.
 
 ToDo:
 - Enable joining a WiFi that is not password protected
-- Check Banner shows negative prices correct
-- POST response, layout?
+- POST response, proper HTML layout?
 - Disconnect from WiFi for duration of wait
 
 Ideas:
 - Chart: Follow actual price with the Y-horizontal?
 - Banner: Toggle Day Average, time now, or similar?
+- Btn: Toggle between data - elec., weather, market?
 - Show errors and/or codes on displays?
 - Allow changing API endpoint? (Store to EEPROM)
 - Enable software updates, from remote?
