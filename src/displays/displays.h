@@ -8,8 +8,8 @@
 #define GPIO_2   2
 #define GPIO_13  13
 
-#define PIN_BANNER  GPIO_13  // D3
-#define PIN_CHART   GPIO_2   // D4
+#define PIN_BANNER  GPIO_13
+#define PIN_CHART   GPIO_2
 
 #define CHART_PILLARS_NUM 19
 
