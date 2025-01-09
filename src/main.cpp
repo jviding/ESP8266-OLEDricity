@@ -35,11 +35,10 @@ void setup() {
   //Tests::test();
   // PRODUCTION
   Displays::init();
-  if (!Networking::enable() && !Networking::connect()) { 
-    // TODO: Add Button press to reset?
+  bool wifi_ok = Networking::enable() && Networking::connect();
+  if (!wifi_ok) { 
     reset_wifi_credentials();
   }
-  // TODO: Show errors on displays? Error codes or text?
 };
 
 void handle_errors(int code) {
