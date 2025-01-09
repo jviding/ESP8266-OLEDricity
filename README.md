@@ -90,11 +90,14 @@ ToDo:
 - Enable joining a WiFi that is not password protected
 - POST response, proper HTML layout?
 - Disconnect from WiFi for duration of wait
+- Error codes or text on displays?
+- Ask for new WiFi creds if incorrect
 
 Ideas:
 - Chart: Follow actual price with the Y-horizontal?
 - Banner: Toggle Day Average, time now, or similar?
 - Btn: Toggle between data - elec., weather, market?
+- Btn: Reset WiFi credentials with a button press?
 - Show errors and/or codes on displays?
 - Allow changing API endpoint? (Store to EEPROM)
 - Enable software updates, from remote?
