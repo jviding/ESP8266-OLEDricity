@@ -4,7 +4,7 @@ int Chart::get_X_offset_to_center_text(char* text) {
   return (SCREEN_X_MAX - display.getUTF8Width(text)) / 2;
 };
 
-void Chart::write_init_message() {
+void Chart::write_msg_starting() {
   Serial.print("Chart: Writing init msg...");
   // Prepare
   display.clearBuffer();
@@ -17,7 +17,7 @@ void Chart::write_init_message() {
   Serial.println("Ok.");
 };
 
-void Chart::write_hotspot_message(char* name, char* password, char* ip_address) {
+void Chart::write_msg_hotspot(char* name, char* password, char* ip_address) {
   Serial.print("Chart: Writing hotspot msg...");
   // Prepare
   display.clearBuffer();
