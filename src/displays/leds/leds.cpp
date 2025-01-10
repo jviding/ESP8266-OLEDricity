@@ -28,19 +28,37 @@ void Leds::set_rgb_color(int red, int green, int blue) {
 void Leds::glow_green_to_blue(int shade) {
   if (shade <= 0) {
     set_rgb_color(0, 255, 0);   // Green
+  } else if (shade <= 1) {
+    set_rgb_color(0, 255, 100);
+  } else if (shade <= 2) {
+    set_rgb_color(0, 255, 200);
+  } else if (shade <= 3) {
+    set_rgb_color(0, 200, 255);
   } else {
+    set_rgb_color(0, 100, 255);
+  }
+  /*else {
     int val = (255 / 5) * (5 - shade);
     set_rgb_color(0, val, 255);
-  }
+  }*/
 };
 
 void Leds::glow_blue_to_red(int shade) {
   if (shade <= 0) {
     set_rgb_color(0, 0, 255);   // Blue
+  } else if (shade <= 1) {
+    set_rgb_color(100, 0, 255);
+  } else if (shade <= 2) {
+    set_rgb_color(200, 0, 255);
+  } else if (shade <= 3) {
+    set_rgb_color(255, 0, 200);
   } else {
+    set_rgb_color(255, 0, 100);
+  }
+  /*else {
     int val = ((255 + 10) / 5) * shade;
     set_rgb_color(val, 0, 255);
-  }  
+  }*/
 };
 
 void Leds::glow(int price) {
