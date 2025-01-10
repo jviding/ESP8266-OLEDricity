@@ -18,8 +18,10 @@ class Displays {
 public:
   // Functions
   static void init();
+  static void set_rgb_color(int red, int green, int blue);
+  static void write_msg_starting();
+  static void write_msg_hotspot(char* name, char* password, char* ip_address);
   static int draw(price_data_t* price_data, int time_now);
-  static void chart_write_hotspot_messages(char* name, char* password, char* ip_address);
 
 private:
   // Functions
