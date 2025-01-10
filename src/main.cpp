@@ -14,19 +14,36 @@ void start_serial() {
   Serial.println("Main: Serial started.");
 };
 
-bool reset_wifi_credentials() {
-  // Enable HotSpot
+void reset_wifi_credentials_and_connect() {
   char* password = nullptr;
   char* ip_address = nullptr;
-  Networking::hotspot_enable(CONFIG_HOTSPOT_NAME, &password, &ip_address);
-  Displays::chart_write_hotspot_messages(CONFIG_HOTSPOT_NAME, password, ip_address);
+  while (true) {
+    // Enable HotSpot
+    Networking::hotspot_enable(CONFIG_HOTSPOT_NAME, &password, &ip_address);
+    Displays::write_msg_hotspot(CONFIG_HOTSPOT_NAME, password, ip_address);
+    // Set WiFi credentials
+    Networking::set_WiFi_SSID_and_password();
+    // Disable HotSpot
+    Networking::hotspot_disable();
+    // Try WiFi connection
+    Displays::write_msg_starting();
+    Displays::set_rgb_color(0, 0, 255); // Blue
+    if (Networking::connect()) {
+      break;
+    } else {
+      Displays::set_rgb_color(255, 0, 0); // Red
+    }
+  }
   delete[] password;
   delete[] ip_address;
-  // Set WiFi credentials
-  Networking::set_WiFi_SSID_and_password();
-  // Disable HotSpot
-  Networking::hotspot_disable();
-  return true;
+};
+
+void start_wifi() {
+  bool wifi_ok = Networking::enable() && Networking::connect();
+  if (!wifi_ok) {
+    reset_wifi_credentials_and_connect();
+  }
+  Displays::set_rgb_color(0, 255, 0); // Green
 };
 
 void setup() {
@@ -35,10 +52,9 @@ void setup() {
   //Tests::test();
   // PRODUCTION
   Displays::init();
-  bool wifi_ok = Networking::enable() && Networking::connect();
-  if (!wifi_ok) { 
-    reset_wifi_credentials();
-  }
+  Displays::set_rgb_color(0, 0, 255); // Blue
+  Displays::write_msg_starting();
+  start_wifi();
 };
 
 void handle_errors(int code) {
