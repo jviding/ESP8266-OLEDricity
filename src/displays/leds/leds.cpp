@@ -13,8 +13,6 @@ void Leds::init() {
   digitalWrite(LED_GREEN,  LOW);
   digitalWrite(LED_BLUE,   LOW);  
   delay(100);
-  // Glow blue
-  set_rgb_color(0, 0, 255);
   // Done
   Serial.println("Ok.");
 };

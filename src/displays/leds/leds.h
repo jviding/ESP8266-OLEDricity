@@ -23,11 +23,11 @@ class Leds {
 public:
   // Functions
   static void init();
+  static void set_rgb_color(int red, int green, int blue);
   static void glow(int price);
 
 private:
   // Functions
-  static void set_rgb_color(int red, int green, int blue);
   static void glow_green_to_blue(int shade);
   static void glow_blue_to_red(int shade);
 };
