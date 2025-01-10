@@ -93,23 +93,26 @@ void WiFi_ctrl::ip_address_to_str(IPAddress IP, char** ip_address) {
 };
 
 bool WiFi_ctrl::hotspot_enable(char* name, char** password, char** ip_address) {
-  Serial.println("WiFi: HotSpot starting...");
+  Serial.print("WiFi: HotSpot starting...");
   // Create password  
-  generate_random_8_digit_password(password);
-  // Open HotSpot
+  if (*password == nullptr) generate_random_8_digit_password(password);
+  // Try open HotSpot
   WiFi.mode(WIFI_AP);
-  if (WiFi.softAP(name, *password)) {
-    IPAddress IP = WiFi.softAPIP();
-    ip_address_to_str(IP, ip_address);
-    Serial.println("WiFi: HotSpot started.");
-    Serial.println(" - Name: Electricube");
-    Serial.print(" - Password: "); Serial.println(*password);
-    Serial.print(" - IP address: "); Serial.println(*ip_address);
-    return true;
-  } else {
-    Serial.println("WiFi: Failed.");
+  if (!WiFi.softAP(name, *password)) {
+    Serial.println("Failed.");
     return false;
   }
+  Serial.println("Ok.");
+  // Get IP address
+  if (*ip_address == nullptr) {
+    IPAddress IP = WiFi.softAPIP();
+    ip_address_to_str(IP, ip_address);
+  }
+  // Log WiFi details
+  Serial.println(" - SSID: Electricube");
+  Serial.print(" - Password: "); Serial.println(*password);
+  Serial.print(" - IP address: "); Serial.println(*ip_address);
+  return true;
 };
 
 bool WiFi_ctrl::hotspot_disable() {
