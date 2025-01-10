@@ -5,7 +5,7 @@ int Chart::get_X_offset_to_center_text(char* text) {
 };
 
 void Chart::write_msg_starting() {
-  Serial.print("Chart: Writing init msg...");
+  Serial.print("Chart: Writing msg starting...");
   // Prepare
   display.clearBuffer();
   display.setFont(u8g2_font_helvB08_tf);
@@ -18,7 +18,7 @@ void Chart::write_msg_starting() {
 };
 
 void Chart::write_msg_hotspot(char* name, char* password, char* ip_address) {
-  Serial.print("Chart: Writing hotspot msg...");
+  Serial.print("Chart: Writing msg hotspot...");
   // Prepare
   display.clearBuffer();
   display.setFont(u8g2_font_helvB08_tf);
