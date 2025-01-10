@@ -5,7 +5,7 @@ int Banner::get_X_offset_to_center_text(char* text) {
   return (X_BANNER_MAX - display.getUTF8Width(text)) / 2;
 };
 
-void Banner::write_brand_message() {
+void Banner::write_msg_brand() {
   Serial.print("Banner: Writing brand...");
   // Prepare
   display.setDisplayRotation(U8G2_R2);
